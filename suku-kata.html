@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Susun Suku Kata</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Game Suku Kata (Drag & Drop)</title>
   <style>
     body {
       font-family: 'Comic Sans MS', cursive;
@@ -15,175 +15,162 @@
       align-items: center;
     }
 
-    .buku {
-      background: rgba(255,255,255,0.95);
-      border-radius: 20px;
+    .kad {
+      background: #ffffffdd;
       padding: 30px;
-      width: 90%;
+      border-radius: 20px;
       max-width: 600px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      width: 90%;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
       text-align: center;
     }
 
     h2 {
       color: #ff77a9;
+      margin-bottom: 10px;
     }
 
-    .suku-container {
-      margin-top: 20px;
+    .emoji {
+      font-size: 60px;
+      margin: 10px 0;
+    }
+
+    .target {
+      min-height: 40px;
+      border: 2px dashed #aaa;
+      padding: 10px;
+      margin: 10px auto;
+      border-radius: 10px;
+      width: 80%;
+      background: #eaf8ff;
+      font-size: 24px;
     }
 
     .suku {
       display: inline-block;
-      background: #ffd6e0;
-      padding: 12px 20px;
-      margin: 8px;
+      background: #ffe0ec;
+      padding: 10px 16px;
+      margin: 6px;
       border-radius: 10px;
-      font-size: 22px;
-      cursor: pointer;
+      font-size: 20px;
+      cursor: grab;
     }
 
-    .suku:hover {
-      background: #ffaec8;
-      color: white;
-    }
-
-    .hasil {
-      margin-top: 15px;
-      font-size: 24px;
-      font-weight: bold;
-    }
-
-    .btn-semak, .nav-btn {
-      margin-top: 20px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 10px;
-      font-size: 18px;
-      cursor: pointer;
-    }
-
-    .btn-semak {
-      background-color: #b2f2bb;
+    .suku:active {
+      cursor: grabbing;
     }
 
     .nav {
-      display: flex;
-      justify-content: space-between;
       margin-top: 20px;
     }
 
-    #feedback {
+    .nav button {
+      background-color: #b2f2bb;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .btn-submit {
+      background: #ffd6e0;
       font-size: 18px;
-      color: #339966;
-      margin-top: 10px;
     }
 
     @media (max-width: 500px) {
-      h2 {
-        font-size: 22px;
-      }
-
-      .suku {
-        font-size: 20px;
-        padding: 12px;
-        display: block;
-        width: 100%;
-        margin: 6px auto;
-      }
-
-      .btn-semak, .nav-btn {
-        font-size: 16px;
-        padding: 12px;
-        width: 100%;
-        margin-top: 10px;
-      }
-
-      .hasil {
-        font-size: 20px;
-      }
-
-      .buku {
-        width: 95%;
-        padding: 20px;
-      }
+      .target { font-size: 20px; }
+      .suku { width: 100%; display: block; margin: 6px auto; }
     }
   </style>
 </head>
 <body>
 
-<div class="buku">
+<div class="kad" id="kad">
   <h2 id="tajuk">Soalan 1</h2>
-  <div class="suku-container" id="pilihan"></div>
-  <div class="hasil" id="hasil"></div>
-  <button class="btn-semak" onclick="semak()">Semak</button>
-  <div id="feedback"></div>
+  <div class="emoji" id="emoji">🐄</div>
+  <div id="target" class="target" ondrop="lepas(event)" ondragover="benar(event)"></div>
+  <div id="pilihan"></div>
+  <button class="btn-submit" onclick="semak()">Seterusnya ➡️</button>
   <div class="nav">
-    <button class="nav-btn" onclick="sebelum()">⬅️</button>
-    <button class="nav-btn" onclick="seterusnya()">➡️</button>
+    <button onclick="location.reload()">🔁 Mula Semula</button>
+    <button onclick="location.href='bm.html'">🏠 Menu</button>
   </div>
-  <button class="nav-btn" onclick="location.href='index.html'" style="margin-top: 15px;">🏠 Menu</button>
 </div>
 
 <script>
-  const soalan = [
-    { jawapan: "mata", suku: ["ma", "ta", "ti"] },
-    { jawapan: "buku", suku: ["ku", "bu", "ka"] },
-    { jawapan: "bola", suku: ["bo", "la", "li"] },
-    { jawapan: "nasi", suku: ["na", "si", "ku"] },
-    { jawapan: "susu", suku: ["su", "pi", "su"] }
-  ];
+const soalan = [
+  { emoji: "🐄", jawapan: "lembu", suku: ["lem", "bu", "su"] },
+  { emoji: "🧃", jawapan: "jus", suku: ["ka", "jus", "lo"] },
+  { emoji: "🦋", jawapan: "ramarama", suku: ["rama", "rama", "me"] },
+  { emoji: "📚", jawapan: "buku", suku: ["bu", "ku", "la"] },
+  { emoji: "👣", jawapan: "kaki", suku: ["ka", "ki", "ko"] },
+  { emoji: "🍍", jawapan: "nenas", suku: ["ne", "nas", "nan"] },
+  { emoji: "🎈", jawapan: "belon", suku: ["be", "lon", "kan"] },
+  { emoji: "🐱", jawapan: "kucing", suku: ["ku", "cing", "kan"] },
+  { emoji: "🚗", jawapan: "kereta", suku: ["ke", "re", "ta"] },
+  { emoji: "🧁", jawapan: "kek", suku: ["kek", "cak", "tik"] }
+];
 
-  let index = 0;
-  let susunan = "";
+let index = 0;
+let susun = [];
 
-  function paparSoalan() {
-    const obj = soalan[index];
-    const sukuRawak = [...obj.suku].sort(() => Math.random() - 0.5);
-    document.getElementById("tajuk").innerText = `Soalan ${index + 1}`;
-    document.getElementById("pilihan").innerHTML = "";
-    document.getElementById("hasil").innerText = "";
-    document.getElementById("feedback").innerText = "";
-    susunan = "";
+function papar() {
+  const s = soalan[index];
+  document.getElementById("tajuk").innerText = "Soalan " + (index + 1);
+  document.getElementById("emoji").innerText = s.emoji;
+  document.getElementById("target").innerText = "";
+  susun = [];
 
-    sukuRawak.forEach(kata => {
-      const span = document.createElement("span");
-      span.className = "suku";
-      span.innerText = kata;
-      span.onclick = () => {
-        susunan += kata;
-        document.getElementById("hasil").innerText = susunan;
-      };
-      document.getElementById("pilihan").appendChild(span);
-    });
+  const pilihan = document.getElementById("pilihan");
+  pilihan.innerHTML = "";
+  [...s.suku].sort(() => Math.random() - 0.5).forEach(txt => {
+    const span = document.createElement("span");
+    span.className = "suku";
+    span.innerText = txt;
+    span.draggable = true;
+    span.ondragstart = e => {
+      e.dataTransfer.setData("text", txt);
+    };
+    pilihan.appendChild(span);
+  });
+}
+
+function benar(ev) {
+  ev.preventDefault();
+}
+
+function lepas(ev) {
+  ev.preventDefault();
+  const txt = ev.dataTransfer.getData("text");
+  susun.push(txt);
+  document.getElementById("target").innerText = susun.join("");
+}
+
+let markah = [];
+
+function semak() {
+  markah[index] = (susun.join("") === soalan[index].jawapan);
+  if (index < soalan.length - 1) {
+    index++;
+    papar();
+  } else {
+    tamat();
   }
+}
 
-  function semak() {
-    const feedback = document.getElementById("feedback");
-    if (susunan === soalan[index].jawapan) {
-      feedback.innerText = "Betul! 🎉";
-    } else {
-      feedback.innerText = "Salah. Cuba semula.";
-      susunan = "";
-      document.getElementById("hasil").innerText = "";
-    }
-  }
+function tamat() {
+  let betul = markah.filter(x => x).length;
+  document.getElementById("kad").innerHTML = `
+    <h2>Tamat!</h2>
+    <p>Anda dapat <strong>${betul}</strong> daripada ${soalan.length} soalan 🎉</p>
+    <button onclick="location.reload()">🔁 Cuba Lagi</button>
+    <button onclick="location.href='bm.html'">🏠 Menu</button>
+  `;
+}
 
-  function seterusnya() {
-    if (index < soalan.length - 1) {
-      index++;
-      paparSoalan();
-    }
-  }
-
-  function sebelum() {
-    if (index > 0) {
-      index--;
-      paparSoalan();
-    }
-  }
-
-  paparSoalan();
+papar();
 </script>
 
 </body>
