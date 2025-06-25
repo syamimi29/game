@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📖 Cerita Nabi</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(to bottom, #fff0f5, #cceeff);
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    h1 {
+      color: #ff77a9;
+      margin-bottom: 20px;
+    }
+
+    .butang-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .butang {
+      background-color: #ffe0ec;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 12px;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+      transition: 0.2s;
+    }
+
+    .butang:hover {
+      background-color: #ffaacc;
+      color: white;
+    }
+
+    @media (max-width: 480px) {
+      .butang {
+        font-size: 18px;
+        padding: 12px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Pilih Cerita Nabi 📖</h1>
+
+  <div class="butang-container">
+    <button class="butang" onclick="location.href='cerita-nabi-nuh.html'">⛵ Nabi Nuh & Kapal</button>
+    <button class="butang" onclick="location.href='cerita-nabi-yunus.html'">🐋 Nabi Yunus & Ikan</button>
+    <button class="butang" onclick="location.href='cerita-nabi-ibrahim.html'">🔥 Nabi Ibrahim & Api</button>
+    <button class="butang" onclick="location.href='cerita-nabi-musa.html'">🌊 Nabi Musa & Laut</button>
+    <button class="butang" onclick="location.href='cerita-nabi-muhammad.html'">🌙 Nabi Muhammad SAW</button>
+    <button class="butang" onclick="location.href='index.html'">🏠 Menu Utama</button>
+  </div>
+
+</body>
+</html>
