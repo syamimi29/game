@@ -3,44 +3,44 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game 6: Teka Nombor Hilang</title>
+  <title>Math Teka Nombor Hilang</title>
   <style>
     body {
       font-family: 'Comic Sans MS', cursive;
-      background: linear-gradient(to bottom, #fffdf0, #cceeff);
+      background: linear-gradient(to bottom, #fef6ff, #d0faff);
       margin: 0;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
     }
 
     .kad {
-      background: #fff;
+      background: #ffffffee;
       padding: 30px;
       border-radius: 20px;
-      width: 90%;
-      max-width: 500px;
       text-align: center;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      max-width: 500px;
+      width: 90%;
     }
 
     h2 {
-      color: #ff8800;
+      color: #ff77a9;
     }
 
     .soalan {
-      font-size: 26px;
-      margin-bottom: 20px;
+      font-size: 28px;
+      margin: 20px 0;
     }
 
     .pilihan button {
       background-color: #ffe0ec;
       border: none;
-      margin: 8px;
       padding: 10px 20px;
-      font-size: 20px;
-      border-radius: 10px;
+      margin: 10px;
+      font-size: 22px;
+      border-radius: 12px;
       cursor: pointer;
     }
 
@@ -49,25 +49,30 @@
       color: white;
     }
 
-    #info {
-      margin-bottom: 20px;
-      font-size: 16px;
-      color: #555;
+    .nav {
+      margin-top: 20px;
     }
 
     .nav button {
       background-color: #b2f2bb;
       border: none;
       padding: 10px 20px;
+      margin: 6px;
       border-radius: 10px;
       font-size: 16px;
-      margin: 5px;
       cursor: pointer;
     }
 
-    @media (max-width: 500px) {
-      .soalan { font-size: 22px; }
-      .pilihan button, .nav button { width: 100%; }
+    @media (max-width: 480px) {
+      .soalan {
+        font-size: 24px;
+      }
+
+      .pilihan button, .nav button {
+        width: 100%;
+        margin: 6px 0;
+        font-size: 20px;
+      }
     }
   </style>
 </head>
@@ -75,90 +80,74 @@
 
 <div class="kad" id="kad">
   <h2 id="tajuk">Soalan 1</h2>
-  <div class="soalan" id="soalan"></div>
+  <div class="soalan" id="soalan">__ + 4 = 9</div>
   <div class="pilihan" id="pilihan"></div>
-  <div id="info">(Pilih jawapan dahulu untuk teruskan)</div>
   <div class="nav">
-    <button onclick="sebelum()">⬅️</button>
-    <button onclick="seterusnya()">➡️</button>
-    <button onclick="location.href='math.html'">🏠 Menu</button>
+    <button onclick="location.reload()">🔁 Mula Semula</button>
+    <button onclick="location.href='index.html'">🏠 Menu Utama</button>
   </div>
 </div>
 
 <script>
-  const soalan = [
-    { teks: "__ + 5 = 8", jawapan: "3", pilihan: ["2", "3", "4"] },
-    { teks: "7 - __ = 4", jawapan: "3", pilihan: ["2", "3", "4"] },
-    { teks: "__ + 2 = 9", jawapan: "7", pilihan: ["6", "7", "8"] },
-    { teks: "10 - __ = 6", jawapan: "4", pilihan: ["4", "5", "6"] },
-    { teks: "__ + 4 = 10", jawapan: "6", pilihan: ["5", "6", "7"] }
-  ];
+const soalan = [
+  { teks: "__ + 4 = 9", jawapan: "5", pilihan: ["4", "5", "6"] },
+  { teks: "7 - __ = 4", jawapan: "3", pilihan: ["2", "3", "4"] },
+  { teks: "3 + __ = 6", jawapan: "3", pilihan: ["3", "2", "4"] },
+  { teks: "__ - 2 = 5", jawapan: "7", pilihan: ["7", "6", "8"] },
+  { teks: "10 - __ = 6", jawapan: "4", pilihan: ["5", "4", "3"] },
+  { teks: "__ + 1 = 4", jawapan: "3", pilihan: ["3", "2", "4"] },
+  { teks: "6 + __ = 10", jawapan: "4", pilihan: ["4", "3", "5"] },
+  { teks: "__ - 5 = 2", jawapan: "7", pilihan: ["6", "7", "8"] },
+  { teks: "2 + __ = 7", jawapan: "5", pilihan: ["4", "5", "6"] },
+  { teks: "9 - __ = 1", jawapan: "8", pilihan: ["8", "7", "6"] }
+];
 
-  let index = 0;
-  let jawapanUser = new Array(soalan.length).fill(null);
+let index = 0;
+let jawapan = [];
 
-  function paparSoalan() {
-    const q = soalan[index];
-    document.getElementById("tajuk").innerText = "Soalan " + (index + 1);
-    document.getElementById("soalan").innerText = q.teks;
-    document.getElementById("pilihan").innerHTML = "";
+function papar() {
+  const s = soalan[index];
+  document.getElementById("tajuk").innerText = "Soalan " + (index + 1);
+  document.getElementById("soalan").innerText = s.teks;
+  const pilihanDiv = document.getElementById("pilihan");
+  pilihanDiv.innerHTML = "";
 
-    q.pilihan.forEach(pil => {
-      const btn = document.createElement("button");
-      btn.innerText = pil;
-      btn.disabled = jawapanUser[index] !== null;
-      btn.onclick = () => {
-        jawapanUser[index] = pil;
-        seterusnya();
-      };
-      document.getElementById("pilihan").appendChild(btn);
-    });
+  s.pilihan.forEach(j => {
+    const btn = document.createElement("button");
+    btn.innerText = j;
+    btn.disabled = jawapan[index] !== undefined;
+    btn.onclick = () => {
+      jawapan[index] = j;
+      seterusnya();
+    };
+    pilihanDiv.appendChild(btn);
+  });
+}
 
-    document.getElementById("info").innerText = jawapanUser[index] 
-      ? `(Jawapan dipilih: ${jawapanUser[index]})` 
-      : `(Pilih jawapan dahulu untuk teruskan)`;
+function seterusnya() {
+  if (index < soalan.length - 1) {
+    index++;
+    papar();
+  } else {
+    tamat();
   }
+}
 
-  function seterusnya() {
-    if (jawapanUser[index] === null) return;
-    if (index < soalan.length - 1) {
-      index++;
-      paparSoalan();
-    } else {
-      tamat();
-    }
-  }
+function tamat() {
+  let betul = 0;
+  soalan.forEach((s, i) => {
+    if (jawapan[i] === s.jawapan) betul++;
+  });
 
-  function sebelum() {
-    if (index > 0) {
-      index--;
-      paparSoalan();
-    }
-  }
+  document.getElementById("kad").innerHTML = `
+    <h2>Tamat!</h2>
+    <p>Anda dapat <strong>${betul}</strong> daripada ${soalan.length} soalan 🎉</p>
+    <button onclick="location.reload()">🔁 Cuba Lagi</button>
+    <button onclick="location.href='index.html'">🏠 Kembali ke Menu</button>
+  `;
+}
 
-  function tamat() {
-    let markah = 0;
-    let ulasan = "";
-    soalan.forEach((q, i) => {
-      const userJwpn = jawapanUser[i] || "—";
-      const betul = userJwpn === q.jawapan;
-      if (betul) markah++;
-      ulasan += `
-        <p><strong>Soalan ${i + 1}:</strong> ${q.teks}<br>
-        Jawapan anda: ${userJwpn} ${betul ? "✅" : `❌ (sebenar: ${q.jawapan})`}</p>
-      `;
-    });
-
-    document.getElementById("kad").innerHTML = `
-      <h2>Jawapan & Skor Akhir</h2>
-      ${ulasan}
-      <p><strong>Skor:</strong> ${markah} / ${soalan.length}</p>
-      <button onclick="location.reload()">🔁 Cuba Lagi</button>
-      <button onclick="location.href='math.html'">🏠 Menu</button>
-    `;
-  }
-
-  paparSoalan();
+papar();
 </script>
 
 </body>
