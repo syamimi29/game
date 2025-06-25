@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Tambah Gambar</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(to bottom, #fffbe6, #d0faff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .kad {
+      background: rgba(255,255,255,0.95);
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 600px;
+    }
+
+    h2 {
+      color: #ff9900;
+    }
+
+    .gambar {
+      font-size: 40px;
+      margin-bottom: 20px;
+    }
+
+    .pilihan {
+      margin-top: 10px;
+    }
+
+    .pilihan button {
+      background-color: #fff0c2;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      font-size: 20px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .pilihan button:hover {
+      background-color: #ffd36e;
+      color: white;
+    }
+
+    #feedback {
+      margin-top: 15px;
+      font-size: 18px;
+      color: #339966;
+    }
+
+    .nav {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .nav button {
+      background-color: #b2f2bb;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 500px) {
+      .gambar {
+        font-size: 30px;
+      }
+
+      .pilihan button {
+        font-size: 18px;
+        width: 100%;
+      }
+
+      .nav button {
+        width: 100%;
+        margin-top: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="kad">
+  <h2 id="tajuk">Soalan 1</h2>
+  <div class="gambar" id="gambar">🐱 + 🐱🐱</div>
+  <div class="pilihan" id="pilihan"></div>
+  <div id="feedback"></div>
+
+  <div class="nav">
+    <button onclick="sebelum()">⬅️ Sebelum</button>
+    <button onclick="seterusnya()">Seterusnya ➡️</button>
+    <button onclick="location.href='math.html'">🏠 Menu</button>
+  </div>
+</div>
+
+<script>
+  const soalan = [
+    { gambar: "🐱 + 🐱🐱", jawapan: "3", pilihan: ["2", "3", "4"] },
+    { gambar: "🍎🍎 + 🍎", jawapan: "3", pilihan: ["3", "4", "2"] },
+    { gambar: "🐶 + 🐶", jawapan: "2", pilihan: ["1", "2", "3"] },
+    { gambar: "🦋🦋 + 🦋🦋", jawapan: "4", pilihan: ["3", "5", "4"] },
+    { gambar: "🐰 + 🐰🐰🐰", jawapan: "4", pilihan: ["2", "4", "3"] }
+  ];
+
+  let index = 0;
+
+  function paparSoalan() {
+    const q = soalan[index];
+    document.getElementById("tajuk").innerText = "Soalan " + (index + 1);
+    document.getElementById("gambar").innerText = q.gambar;
+    document.getElementById("feedback").innerText = "";
+    const pilihanDiv = document.getElementById("pilihan");
+    pilihanDiv.innerHTML = "";
+    q.pilihan.forEach(jawapan => {
+      const btn = document.createElement("button");
+      btn.innerText = jawapan;
+      btn.onclick = () => semak(jawapan);
+      pilihanDiv.appendChild(btn);
+    });
+  }
+
+  function semak(jawapan) {
+    const betul = soalan[index].jawapan;
+    const feedback = document.getElementById("feedback");
+    if (jawapan === betul) {
+      feedback.innerText = "Betul! 🎉";
+    } else {
+      feedback.innerText = "Salah. Cuba lagi!";
+    }
+  }
+
+  function seterusnya() {
+    if (index < soalan.length - 1) {
+      index++;
+      paparSoalan();
+    }
+  }
+
+  function sebelum() {
+    if (index > 0) {
+      index--;
+      paparSoalan();
+    }
+  }
+
+  paparSoalan();
+</script>
+
+</body>
+</html>

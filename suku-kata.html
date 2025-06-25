@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Susun Suku Kata</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(to bottom, #fef6ff, #d0faff);
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .buku {
+      background: rgba(255,255,255,0.95);
+      border-radius: 20px;
+      padding: 30px;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+
+    h2 {
+      color: #ff77a9;
+    }
+
+    .suku-container {
+      margin-top: 20px;
+    }
+
+    .suku {
+      display: inline-block;
+      background: #ffd6e0;
+      padding: 12px 20px;
+      margin: 8px;
+      border-radius: 10px;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .suku:hover {
+      background: #ffaec8;
+      color: white;
+    }
+
+    .hasil {
+      margin-top: 15px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .btn-semak, .nav-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .btn-semak {
+      background-color: #b2f2bb;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    #feedback {
+      font-size: 18px;
+      color: #339966;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 500px) {
+      h2 {
+        font-size: 22px;
+      }
+
+      .suku {
+        font-size: 20px;
+        padding: 12px;
+        display: block;
+        width: 100%;
+        margin: 6px auto;
+      }
+
+      .btn-semak, .nav-btn {
+        font-size: 16px;
+        padding: 12px;
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      .hasil {
+        font-size: 20px;
+      }
+
+      .buku {
+        width: 95%;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="buku">
+  <h2 id="tajuk">Soalan 1</h2>
+  <div class="suku-container" id="pilihan"></div>
+  <div class="hasil" id="hasil"></div>
+  <button class="btn-semak" onclick="semak()">Semak</button>
+  <div id="feedback"></div>
+  <div class="nav">
+    <button class="nav-btn" onclick="sebelum()">⬅️</button>
+    <button class="nav-btn" onclick="seterusnya()">➡️</button>
+  </div>
+  <button class="nav-btn" onclick="location.href='index.html'" style="margin-top: 15px;">🏠 Menu</button>
+</div>
+
+<script>
+  const soalan = [
+    { jawapan: "mata", suku: ["ma", "ta", "ti"] },
+    { jawapan: "buku", suku: ["ku", "bu", "ka"] },
+    { jawapan: "bola", suku: ["bo", "la", "li"] },
+    { jawapan: "nasi", suku: ["na", "si", "ku"] },
+    { jawapan: "susu", suku: ["su", "pi", "su"] }
+  ];
+
+  let index = 0;
+  let susunan = "";
+
+  function paparSoalan() {
+    const obj = soalan[index];
+    const sukuRawak = [...obj.suku].sort(() => Math.random() - 0.5);
+    document.getElementById("tajuk").innerText = `Soalan ${index + 1}`;
+    document.getElementById("pilihan").innerHTML = "";
+    document.getElementById("hasil").innerText = "";
+    document.getElementById("feedback").innerText = "";
+    susunan = "";
+
+    sukuRawak.forEach(kata => {
+      const span = document.createElement("span");
+      span.className = "suku";
+      span.innerText = kata;
+      span.onclick = () => {
+        susunan += kata;
+        document.getElementById("hasil").innerText = susunan;
+      };
+      document.getElementById("pilihan").appendChild(span);
+    });
+  }
+
+  function semak() {
+    const feedback = document.getElementById("feedback");
+    if (susunan === soalan[index].jawapan) {
+      feedback.innerText = "Betul! 🎉";
+    } else {
+      feedback.innerText = "Salah. Cuba semula.";
+      susunan = "";
+      document.getElementById("hasil").innerText = "";
+    }
+  }
+
+  function seterusnya() {
+    if (index < soalan.length - 1) {
+      index++;
+      paparSoalan();
+    }
+  }
+
+  function sebelum() {
+    if (index > 0) {
+      index--;
+      paparSoalan();
+    }
+  }
+
+  paparSoalan();
+</script>
+
+</body>
+</html>

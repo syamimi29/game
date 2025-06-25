@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Padankan Ayat</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(to bottom, #fffdf6, #d9f7ff);
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .kad {
+      background: rgba(255,255,255,0.95);
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 600px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    }
+
+    h2 {
+      color: #ff77a9;
+    }
+
+    .bahagianA {
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+
+    .btn {
+      background-color: #ffe0ec;
+      border: none;
+      padding: 10px 20px;
+      margin: 6px;
+      border-radius: 12px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #ffaec8;
+      color: white;
+    }
+
+    #feedback {
+      margin-top: 10px;
+      font-size: 18px;
+      color: #339966;
+    }
+
+    .nav {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .nav-btn {
+      background-color: #b2f2bb;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="kad">
+  <h2 id="tajuk">Soalan 1</h2>
+  <div class="bahagianA" id="ayatAwal">Ibu sedang</div>
+  <div id="pilihan">
+    <!-- Butang akan dijana secara automatik -->
+  </div>
+  <div id="feedback"></div>
+  <div class="nav">
+    <button class="nav-btn" onclick="sebelum()">⬅️ Sebelum</button>
+    <button class="nav-btn" onclick="seterusnya()">Seterusnya ➡️</button>
+    <button class="nav-btn" onclick="location.href='index.html'" style="margin-top: 15px;">
+  🏠 Kembali ke Menu
+</button>
+  </div>
+</div>
+
+<script>
+  const soalan = [
+    { awal: "Ibu sedang", jawapan: "memasak", pilihan: ["memasak", "bermain", "melompat"] },
+    { awal: "Adik suka", jawapan: "membaca buku", pilihan: ["berlari", "membaca buku", "menyanyi"] },
+    { awal: "Ayah pergi ke", jawapan: "pasar", pilihan: ["kucing", "kerusi", "pasar"] },
+    { awal: "Saya sedang", jawapan: "menulis", pilihan: ["menjerit", "menyanyi", "menulis"] },
+    { awal: "Kakak pandai", jawapan: "melukis", pilihan: ["melukis", "berlari-lari", "mengunyah"] }
+  ];
+
+  let index = 0;
+
+  function paparSoalan() {
+    const q = soalan[index];
+    document.getElementById("tajuk").innerText = "Soalan " + (index + 1);
+    document.getElementById("ayatAwal").innerText = q.awal;
+    document.getElementById("feedback").innerText = "";
+    const pilihanDiv = document.getElementById("pilihan");
+    pilihanDiv.innerHTML = "";
+    q.pilihan.forEach(j => {
+      const btn = document.createElement("button");
+      btn.className = "btn";
+      btn.innerText = j;
+      btn.onclick = () => semak(j);
+      pilihanDiv.appendChild(btn);
+    });
+  }
+
+  function semak(jawapanDipilih) {
+    const jBetul = soalan[index].jawapan;
+    const feedback = document.getElementById("feedback");
+    if (jawapanDipilih === jBetul) {
+      feedback.innerText = "Betul! Ayat lengkap: " + soalan[index].awal + " " + jBetul;
+    } else {
+      feedback.innerText = "Salah. Cuba lagi!";
+    }
+  }
+
+  function seterusnya() {
+    if (index < soalan.length - 1) {
+      index++;
+      paparSoalan();
+    }
+  }
+
+  function sebelum() {
+    if (index > 0) {
+      index--;
+      paparSoalan();
+    }
+  }
+
+  paparSoalan();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Padankan Gambar</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(to bottom, #fff0f5, #d1f7ff);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 20px;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+    .gambar {
+      font-size: 100px;
+      margin-bottom: 20px;
+    }
+    .jawapan {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .btn {
+      background-color: #ffe0ec;
+      border: none;
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .btn:hover {
+      background-color: #ffb3ce;
+      color: white;
+    }
+    #feedback {
+      margin-top: 15px;
+      font-size: 18px;
+      color: #339966;
+    }
+    .nav {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2 id="tajuk">Soalan 1</h2>
+    <div id="gambar" class="gambar">🐱</div>
+    <div class="jawapan" id="pilihan"></div>
+    <div id="feedback"></div>
+    <div class="nav">
+      <button class="btn" onclick="sebelum()">⬅️</button>
+      <button class="btn" onclick="seterusnya()">➡️</button>
+      <button class="btn" onclick="location.href='index.html'" style="margin-top: 20px;">🏠 Menu Utama</button>
+    </div>
+  </div>
+
+  <script>
+    const soalan = [
+      { emoji: "🐱", jawapan: "kucing", pilihan: ["kucing", "ayam", "tikus"] },
+      { emoji: "🏀", jawapan: "bola", pilihan: ["bola", "baju", "bola sepak"] },
+      { emoji: "🍚", jawapan: "nasi", pilihan: ["roti", "nasi", "mee"] },
+      { emoji: "🚗", jawapan: "kereta", pilihan: ["kereta", "motosikal", "bas"] },
+      { emoji: "🌧️", jawapan: "hujan", pilihan: ["hujan", "awan", "salji"] }
+    ];
+
+    let index = 0;
+
+    function paparSoalan() {
+      document.getElementById("tajuk").innerText = `Soalan ${index + 1}`;
+      document.getElementById("gambar").innerText = soalan[index].emoji;
+      document.getElementById("feedback").innerText = "";
+      const pilihanDiv = document.getElementById("pilihan");
+      pilihanDiv.innerHTML = "";
+
+      soalan[index].pilihan.forEach(jwp => {
+        const btn = document.createElement("button");
+        btn.className = "btn";
+        btn.innerText = jwp;
+        btn.onclick = () => semak(jwp);
+        pilihanDiv.appendChild(btn);
+      });
+    }
+
+    function semak(jwp) {
+      const jawapanBetul = soalan[index].jawapan;
+      const feedback = document.getElementById("feedback");
+      if (jwp === jawapanBetul) {
+        feedback.innerText = "Betul! 🎉";
+      } else {
+        feedback.innerText = "Salah. Cuba lagi!";
+      }
+    }
+
+    function seterusnya() {
+      if (index < soalan.length - 1) {
+        index++;
+        paparSoalan();
+      }
+    }
+
+    function sebelum() {
+      if (index > 0) {
+        index--;
+        paparSoalan();
+      }
+    }
+
+    paparSoalan();
+  </script>
+<div class="footer">
+  <button onclick="sebelum()">⬅️</button>
+  <button onclick="seterusnya()">➡️</button>
+  <button onclick="location.href='index.html'">🏠 Menu Utama</button>
+</div>
+
+
+
+</body>
+</html>

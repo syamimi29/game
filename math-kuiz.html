@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Kuiz Matematik</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(to bottom, #fffdf0, #c6f7ff);
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .kuiz {
+      background: #fff;
+      padding: 30px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #ff8800;
+    }
+
+    .soalan {
+      font-size: 24px;
+      margin: 20px 0;
+    }
+
+    .jawapan button {
+      background-color: #ffe0ec;
+      border: none;
+      padding: 10px 20px;
+      margin: 8px;
+      font-size: 18px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .jawapan button:hover {
+      background-color: #ffaec8;
+      color: white;
+    }
+
+    #feedback {
+      margin-top: 15px;
+      font-size: 18px;
+      color: #339966;
+    }
+
+    .nav {
+      margin-top: 20px;
+    }
+
+    .nav button {
+      background-color: #b2f2bb;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 5px;
+    }
+
+    @media (max-width: 500px) {
+      .soalan {
+        font-size: 20px;
+      }
+
+      .jawapan button {
+        width: 100%;
+      }
+
+      .nav button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="kuiz">
+  <h2 id="tajuk">Soalan 1</h2>
+  <div class="soalan" id="soalan">5 + 3 = ?</div>
+  <div class="jawapan" id="pilihan"></div>
+  <div id="feedback"></div>
+  <div class="nav" id="navigasi">
+    <button onclick="seterusnya()">Soalan Seterusnya ➡️</button>
+  </div>
+</div>
+
+<script>
+  const soalan = [
+    { soalan: "5 + 3 = ?", jawapan: "8", pilihan: ["6", "8", "9"] },
+    { soalan: "9 - 4 = ?", jawapan: "5", pilihan: ["4", "5", "6"] },
+    { soalan: "2 + 6 = ?", jawapan: "8", pilihan: ["7", "8", "9"] },
+    { soalan: "10 - 3 = ?", jawapan: "7", pilihan: ["6", "8", "7"] },
+    { soalan: "4 + 1 = ?", jawapan: "5", pilihan: ["5", "6", "4"] }
+  ];
+
+  let index = 0;
+  let markah = 0;
+  let telahJawab = false;
+
+  function paparSoalan() {
+    const q = soalan[index];
+    document.getElementById("tajuk").innerText = "Soalan " + (index + 1);
+    document.getElementById("soalan").innerText = q.soalan;
+    document.getElementById("feedback").innerText = "";
+    document.getElementById("pilihan").innerHTML = "";
+    telahJawab = false;
+
+    q.pilihan.forEach(pil => {
+      const btn = document.createElement("button");
+      btn.innerText = pil;
+      btn.onclick = () => semak(pil, btn);
+      document.getElementById("pilihan").appendChild(btn);
+    });
+
+    document.getElementById("navigasi").style.display = "none";
+  }
+
+  function semak(jawapan, btn) {
+    if (telahJawab) return;
+    telahJawab = true;
+
+    const betul = soalan[index].jawapan;
+    if (jawapan === betul) {
+      markah++;
+      document.getElementById("feedback").innerText = "Betul! 🎉";
+    } else {
+      document.getElementById("feedback").innerText = "Salah. Jawapan betul: " + betul;
+    }
+
+    // Disable semua butang selepas jawapan
+    document.querySelectorAll(".jawapan button").forEach(b => b.disabled = true);
+
+    document.getElementById("navigasi").style.display = "block";
+  }
+
+  function seterusnya() {
+    if (index < soalan.length - 1) {
+      index++;
+      paparSoalan();
+    } else {
+      tamat();
+    }
+  }
+
+  function tamat() {
+    document.querySelector(".kuiz").innerHTML = `
+      <h2>Skor Anda</h2>
+      <p>🎯 ${markah} / ${soalan.length} soalan betul</p>
+      <button onclick="location.reload()">🔁 Cuba Lagi</button>
+      <button onclick="location.href='math.html'">🏠 Kembali ke Menu</button>
+    `;
+  }
+
+  paparSoalan();
+</script>
+
+</body>
+</html>
