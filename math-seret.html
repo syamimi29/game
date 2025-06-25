@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Seret Jawapan</title>
+  <title>Math Seret Jawapan</title>
   <style>
     body {
       font-family: 'Comic Sans MS', cursive;
-      background: linear-gradient(to bottom, #fffaf0, #ccf5ff);
+      background: linear-gradient(to bottom, #fdf6ff, #d0faff);
       margin: 0;
       display: flex;
       justify-content: center;
@@ -16,98 +16,68 @@
     }
 
     .kad {
-      background: rgba(255,255,255,0.95);
+      background: #ffffffee;
       padding: 30px;
       border-radius: 20px;
-      width: 90%;
-      max-width: 500px;
       text-align: center;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      max-width: 500px;
+      width: 90%;
     }
 
     h2 {
-      color: #ff8800;
+      color: #ff77a9;
     }
 
     .soalan {
       font-size: 26px;
-      margin-bottom: 20px;
+      margin: 20px 0;
     }
 
-    .dropzone {
-      display: inline-block;
-      width: 60px;
-      height: 40px;
+    .drop {
       border: 2px dashed #aaa;
-      border-radius: 6px;
-      vertical-align: middle;
-      margin-left: 8px;
-      font-size: 24px;
-      padding-top: 5px;
-    }
-
-    .pilihan {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-    }
-
-    .pilihan div {
-      padding: 10px 20px;
-      background-color: #ffe0ec;
+      padding: 15px;
+      min-height: 40px;
+      margin: 15px auto;
       border-radius: 10px;
-      font-size: 20px;
+      font-size: 24px;
+      background: #eafaff;
+      width: 80%;
+    }
+
+    .jawapan {
+      display: inline-block;
+      background-color: #ffe0ec;
+      padding: 10px 20px;
+      margin: 8px;
+      border-radius: 10px;
+      font-size: 22px;
       cursor: grab;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-
-    .pilihan div:hover {
-      background-color: #ffaec8;
-      color: white;
-    }
-
-    #feedback {
-      font-size: 18px;
-      color: #339966;
-      margin-bottom: 10px;
-    }
-
-    #skor {
-      font-size: 16px;
-      margin-bottom: 20px;
-      color: #333;
     }
 
     .nav {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
+      margin-top: 20px;
     }
 
     .nav button {
       background-color: #b2f2bb;
       border: none;
       padding: 10px 20px;
+      margin: 6px;
       border-radius: 10px;
       font-size: 16px;
       cursor: pointer;
     }
 
-    @media (max-width: 500px) {
-      .soalan {
+    @media (max-width: 480px) {
+      .jawapan {
+        display: block;
+        margin: 10px auto;
+        font-size: 20px;
+      }
+
+      .drop {
         font-size: 22px;
-      }
-
-      .pilihan div {
-        width: 100%;
-        text-align: center;
-      }
-
-      .nav button {
-        width: 100%;
       }
     }
   </style>
@@ -116,101 +86,88 @@
 
 <div class="kad" id="kad">
   <h2 id="tajuk">Soalan 1</h2>
-  <div class="soalan" id="soalan"></div>
-  <div class="pilihan" id="pilihan"></div>
-  <div id="feedback"></div>
-  <div id="skor">Skor: 0</div>
+  <div class="soalan" id="soalan">6 + 2 =</div>
+  <div class="drop" id="drop" ondrop="lepas(event)" ondragover="benar(event)"></div>
+  <div id="pilihan"></div>
   <div class="nav">
-    <button onclick="sebelum()">⬅️</button>
-    <button onclick="seterusnya()">➡️</button>
-    <button onclick="location.href='math-index.html'">🏠 Menu</button>
+    <button onclick="location.reload()">🔁 Mula Semula</button>
+    <button onclick="location.href='math.html'">🏠 Menu Utama</button>
   </div>
 </div>
 
 <script>
-  const soalan = [
-    { nombor1: 6, nombor2: 3, jawapan: 9, pilihan: [8, 9, 7] },
-    { nombor1: 9, nombor2: 2, jawapan: 11, pilihan: [10, 11, 12] },
-    { nombor1: 4, nombor2: 4, jawapan: 8, pilihan: [7, 9, 8] },
-    { nombor1: 10, nombor2: 2, jawapan: 8, pilihan: [9, 8, 7] },
-    { nombor1: 7, nombor2: 5, jawapan: 12, pilihan: [12, 13, 11] }
-  ];
+const soalan = [
+  { teks: "6 + 2 =", jawapan: "8", pilihan: ["7", "8", "9"] },
+  { teks: "4 + 3 =", jawapan: "7", pilihan: ["6", "7", "8"] },
+  { teks: "2 + 5 =", jawapan: "7", pilihan: ["7", "6", "5"] },
+  { teks: "9 + 1 =", jawapan: "10", pilihan: ["9", "10", "11"] },
+  { teks: "3 + 3 =", jawapan: "6", pilihan: ["6", "7", "5"] },
+  { teks: "5 + 2 =", jawapan: "7", pilihan: ["8", "6", "7"] },
+  { teks: "1 + 6 =", jawapan: "7", pilihan: ["7", "8", "6"] },
+  { teks: "2 + 2 =", jawapan: "4", pilihan: ["3", "4", "5"] },
+  { teks: "7 + 0 =", jawapan: "7", pilihan: ["6", "7", "8"] },
+  { teks: "3 + 5 =", jawapan: "8", pilihan: ["8", "7", "9"] }
+];
 
-  let index = 0;
-  let skor = 0;
-  let bolehNext = false;
+let index = 0;
+let jawapan = [];
 
-  function paparSoalan() {
-    const q = soalan[index];
-    bolehNext = false;
-    document.getElementById("tajuk").innerText = "Soalan " + (index + 1);
-    document.getElementById("soalan").innerHTML = `
-      ${q.nombor1} ${q.nombor1 + q.nombor2 === q.jawapan ? "+" : "-"} ${q.nombor2} = 
-      <span class="dropzone" ondrop="lepas(event)" ondragover="benarkan(event)" id="drop"></span>
-    `;
-    document.getElementById("feedback").innerText = "";
-    document.getElementById("skor").innerText = `Skor: ${skor}`;
-    const pilihanDiv = document.getElementById("pilihan");
-    pilihanDiv.innerHTML = "";
+function papar() {
+  const s = soalan[index];
+  document.getElementById("tajuk").innerText = "Soalan " + (index + 1);
+  document.getElementById("soalan").innerText = s.teks;
+  document.getElementById("drop").innerText = "";
+  const pilihan = document.getElementById("pilihan");
+  pilihan.innerHTML = "";
 
-    q.pilihan.forEach(val => {
-      const jawapan = document.createElement("div");
-      jawapan.innerText = val;
-      jawapan.draggable = true;
-      jawapan.id = "drag" + val;
-      jawapan.ondragstart = (e) => e.dataTransfer.setData("text", val);
-      pilihanDiv.appendChild(jawapan);
-    });
+  [...s.pilihan].sort(() => Math.random() - 0.5).forEach(j => {
+    const span = document.createElement("span");
+    span.className = "jawapan";
+    span.innerText = j;
+    span.draggable = true;
+    span.ondragstart = e => {
+      e.dataTransfer.setData("text", j);
+    };
+    pilihan.appendChild(span);
+  });
+}
+
+function benar(e) {
+  e.preventDefault();
+}
+
+function lepas(e) {
+  e.preventDefault();
+  const data = e.dataTransfer.getData("text");
+  document.getElementById("drop").innerText = data;
+  jawapan[index] = data;
+  setTimeout(seterusnya, 500);
+}
+
+function seterusnya() {
+  if (index < soalan.length - 1) {
+    index++;
+    papar();
+  } else {
+    tamat();
   }
+}
 
-  function benarkan(ev) {
-    ev.preventDefault();
-  }
+function tamat() {
+  let betul = 0;
+  soalan.forEach((s, i) => {
+    if (jawapan[i] === s.jawapan) betul++;
+  });
 
-  function lepas(ev) {
-    ev.preventDefault();
-    const data = ev.dataTransfer.getData("text");
-    const q = soalan[index];
-    document.getElementById("drop").innerText = data;
+  document.getElementById("kad").innerHTML = `
+    <h2>Tamat!</h2>
+    <p>Anda dapat <strong>${betul}</strong> daripada ${soalan.length} soalan 🎉</p>
+    <button onclick="location.reload()">🔁 Cuba Lagi</button>
+    <button onclick="location.href='math.html'">🏠 Kembali ke Menu</button>
+  `;
+}
 
-    if (parseInt(data) === q.jawapan) {
-      document.getElementById("feedback").innerText = "Betul! 🎉";
-      if (!bolehNext) skor++;
-      bolehNext = true;
-      document.getElementById("skor").innerText = `Skor: ${skor}`;
-    } else {
-      document.getElementById("feedback").innerText = "Salah. Cuba lagi!";
-      bolehNext = false;
-    }
-  }
-
-  function seterusnya() {
-    if (!bolehNext) return;
-    if (index < soalan.length - 1) {
-      index++;
-      paparSoalan();
-    } else {
-      tamat();
-    }
-  }
-
-  function sebelum() {
-    if (index > 0) {
-      index--;
-      paparSoalan();
-    }
-  }
-
-  function tamat() {
-    document.getElementById("kad").innerHTML = `
-      <h2>Skor Akhir</h2>
-      <p>Anda dapat <strong>${skor}</strong> / ${soalan.length} soalan betul!</p>
-      <button onclick="location.reload()">🔁 Cuba Lagi</button>
-      <button onclick="location.href='math.html'">🏠 Kembali ke Menu</button>
-    `;
-  }
-
-  paparSoalan();
+papar();
 </script>
 
 </body>
