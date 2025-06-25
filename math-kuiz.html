@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Kuiz Matematik</title>
+  <title>Math Kuiz Campur</title>
   <style>
     body {
       font-family: 'Comic Sans MS', cursive;
-      background: linear-gradient(to bottom, #fffdf0, #c6f7ff);
+      background: linear-gradient(to bottom, #fdf6ff, #d0faff);
       margin: 0;
       display: flex;
       justify-content: center;
@@ -15,44 +15,38 @@
       height: 100vh;
     }
 
-    .kuiz {
-      background: #fff;
+    .kad {
+      background: #ffffffee;
       padding: 30px;
       border-radius: 20px;
-      width: 90%;
       max-width: 500px;
+      width: 90%;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
       text-align: center;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
     h2 {
-      color: #ff8800;
+      color: #ff77a9;
     }
 
     .soalan {
-      font-size: 24px;
+      font-size: 26px;
       margin: 20px 0;
     }
 
-    .jawapan button {
+    .pilihan button {
       background-color: #ffe0ec;
       border: none;
       padding: 10px 20px;
-      margin: 8px;
-      font-size: 18px;
-      border-radius: 10px;
+      margin: 10px;
+      font-size: 20px;
+      border-radius: 12px;
       cursor: pointer;
     }
 
-    .jawapan button:hover {
+    .pilihan button:hover {
       background-color: #ffaec8;
       color: white;
-    }
-
-    #feedback {
-      margin-top: 15px;
-      font-size: 18px;
-      color: #339966;
     }
 
     .nav {
@@ -63,107 +57,93 @@
       background-color: #b2f2bb;
       border: none;
       padding: 10px 20px;
+      margin: 6px;
       border-radius: 10px;
       font-size: 16px;
       cursor: pointer;
-      margin: 5px;
     }
 
-    @media (max-width: 500px) {
-      .soalan {
-        font-size: 20px;
-      }
-
-      .jawapan button {
+    @media (max-width: 480px) {
+      .pilihan button, .nav button {
         width: 100%;
-      }
-
-      .nav button {
-        width: 100%;
+        margin: 6px 0;
+        font-size: 18px;
       }
     }
   </style>
 </head>
 <body>
 
-<div class="kuiz">
+<div class="kad" id="kad">
   <h2 id="tajuk">Soalan 1</h2>
-  <div class="soalan" id="soalan">5 + 3 = ?</div>
-  <div class="jawapan" id="pilihan"></div>
-  <div id="feedback"></div>
-  <div class="nav" id="navigasi">
-    <button onclick="seterusnya()">Soalan Seterusnya ➡️</button>
+  <div class="soalan" id="soalan">5 + 3 =</div>
+  <div class="pilihan" id="pilihan"></div>
+  <div class="nav">
+    <button onclick="location.reload()">🔁 Mula Semula</button>
+    <button onclick="location.href='math.html'">🏠 Menu Utama</button>
   </div>
 </div>
 
 <script>
-  const soalan = [
-    { soalan: "5 + 3 = ?", jawapan: "8", pilihan: ["6", "8", "9"] },
-    { soalan: "9 - 4 = ?", jawapan: "5", pilihan: ["4", "5", "6"] },
-    { soalan: "2 + 6 = ?", jawapan: "8", pilihan: ["7", "8", "9"] },
-    { soalan: "10 - 3 = ?", jawapan: "7", pilihan: ["6", "8", "7"] },
-    { soalan: "4 + 1 = ?", jawapan: "5", pilihan: ["5", "6", "4"] }
-  ];
+const soalan = [
+  { teks: "5 + 3 =", jawapan: "8", pilihan: ["6", "8", "9"] },
+  { teks: "9 - 4 =", jawapan: "5", pilihan: ["4", "6", "5"] },
+  { teks: "2 + 6 =", jawapan: "8", pilihan: ["7", "8", "6"] },
+  { teks: "7 - 2 =", jawapan: "5", pilihan: ["5", "6", "4"] },
+  { teks: "3 + 1 =", jawapan: "4", pilihan: ["4", "3", "5"] },
+  { teks: "8 - 3 =", jawapan: "5", pilihan: ["4", "5", "6"] },
+  { teks: "4 + 2 =", jawapan: "6", pilihan: ["5", "6", "7"] },
+  { teks: "6 - 1 =", jawapan: "5", pilihan: ["4", "5", "6"] },
+  { teks: "1 + 7 =", jawapan: "8", pilihan: ["7", "8", "9"] },
+  { teks: "10 - 2 =", jawapan: "8", pilihan: ["8", "7", "6"] }
+];
 
-  let index = 0;
-  let markah = 0;
-  let telahJawab = false;
+let index = 0;
+let jawapan = [];
 
-  function paparSoalan() {
-    const q = soalan[index];
-    document.getElementById("tajuk").innerText = "Soalan " + (index + 1);
-    document.getElementById("soalan").innerText = q.soalan;
-    document.getElementById("feedback").innerText = "";
-    document.getElementById("pilihan").innerHTML = "";
-    telahJawab = false;
+function papar() {
+  const s = soalan[index];
+  document.getElementById("tajuk").innerText = "Soalan " + (index + 1);
+  document.getElementById("soalan").innerText = s.teks;
+  const pilihan = document.getElementById("pilihan");
+  pilihan.innerHTML = "";
 
-    q.pilihan.forEach(pil => {
-      const btn = document.createElement("button");
-      btn.innerText = pil;
-      btn.onclick = () => semak(pil, btn);
-      document.getElementById("pilihan").appendChild(btn);
-    });
+  s.pilihan.forEach(j => {
+    const btn = document.createElement("button");
+    btn.innerText = j;
+    btn.disabled = jawapan[index] !== undefined;
+    btn.onclick = () => {
+      jawapan[index] = j;
+      seterusnya();
+    };
+    pilihan.appendChild(btn);
+  });
+}
 
-    document.getElementById("navigasi").style.display = "none";
+function seterusnya() {
+  if (index < soalan.length - 1) {
+    index++;
+    papar();
+  } else {
+    tamat();
   }
+}
 
-  function semak(jawapan, btn) {
-    if (telahJawab) return;
-    telahJawab = true;
+function tamat() {
+  let betul = 0;
+  soalan.forEach((s, i) => {
+    if (jawapan[i] === s.jawapan) betul++;
+  });
 
-    const betul = soalan[index].jawapan;
-    if (jawapan === betul) {
-      markah++;
-      document.getElementById("feedback").innerText = "Betul! 🎉";
-    } else {
-      document.getElementById("feedback").innerText = "Salah. Jawapan betul: " + betul;
-    }
+  document.getElementById("kad").innerHTML = `
+    <h2>Tamat!</h2>
+    <p>Anda dapat <strong>${betul}</strong> daripada ${soalan.length} soalan 🎉</p>
+    <button onclick="location.reload()">🔁 Cuba Lagi</button>
+    <button onclick="location.href='math.html'">🏠 Kembali ke Menu</button>
+  `;
+}
 
-    // Disable semua butang selepas jawapan
-    document.querySelectorAll(".jawapan button").forEach(b => b.disabled = true);
-
-    document.getElementById("navigasi").style.display = "block";
-  }
-
-  function seterusnya() {
-    if (index < soalan.length - 1) {
-      index++;
-      paparSoalan();
-    } else {
-      tamat();
-    }
-  }
-
-  function tamat() {
-    document.querySelector(".kuiz").innerHTML = `
-      <h2>Skor Anda</h2>
-      <p>🎯 ${markah} / ${soalan.length} soalan betul</p>
-      <button onclick="location.reload()">🔁 Cuba Lagi</button>
-      <button onclick="location.href='math.html'">🏠 Kembali ke Menu</button>
-    `;
-  }
-
-  paparSoalan();
+papar();
 </script>
 
 </body>
