@@ -7,130 +7,150 @@
   <style>
     body {
       font-family: 'Comic Sans MS', cursive;
-      background: linear-gradient(to bottom, #fffdf6, #d9f7ff);
-      height: 100vh;
+      background: linear-gradient(to bottom, #fffdf6, #d0faff);
       margin: 0;
       display: flex;
       justify-content: center;
       align-items: center;
+      height: 100vh;
     }
+
     .kad {
-      background: rgba(255,255,255,0.95);
+      background: #ffffffdd;
       padding: 30px;
       border-radius: 20px;
-      text-align: center;
       max-width: 600px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      width: 90%;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      text-align: center;
     }
+
     h2 {
       color: #ff77a9;
     }
-    .ayatA {
-      font-size: 24px;
-      margin: 15px 0;
+
+    .soalan {
+      font-size: 22px;
+      margin: 20px 0;
     }
-    .btn {
+
+    .pilihan button {
       background-color: #ffe0ec;
       border: none;
-      padding: 10px 20px;
-      margin: 6px;
-      border-radius: 12px;
+      padding: 10px 18px;
+      margin: 8px;
       font-size: 18px;
+      border-radius: 12px;
       cursor: pointer;
     }
-    .btn:hover {
+
+    .pilihan button:hover {
       background-color: #ffaec8;
       color: white;
     }
-    #feedback {
-      margin-top: 12px;
-      font-size: 18px;
-      color: #339966;
-    }
+
     .nav {
       margin-top: 20px;
-      display: flex;
-      justify-content: space-between;
     }
-    .nav-btn {
+
+    .nav button {
       background-color: #b2f2bb;
       border: none;
-      padding: 8px 18px;
+      padding: 10px 20px;
+      margin: 5px;
       border-radius: 10px;
       font-size: 16px;
       cursor: pointer;
+    }
+
+    @media (max-width: 500px) {
+      .soalan { font-size: 20px; }
+      .pilihan button, .nav button { width: 100%; margin: 6px 0; }
     }
   </style>
 </head>
 <body>
 
-  <div class="kad">
-    <h2 id="tajuk">Soalan 1</h2>
-    <div class="ayatA" id="ayatAwal">Ibu sedang</div>
-    <div id="pilihan"></div>
-    <div id="feedback"></div>
-    <div class="nav">
-      <button class="nav-btn" onclick="sebelum()">⬅️</button>
-      <button class="nav-btn" onclick="seterusnya()">➡️</button>
-      <button class="nav-btn" onclick="location.href='index.html'" style="margin-top: 15px;">
-  🏠 Kembali ke Menu
-</button>
-    </div>
+<div class="kad" id="kad">
+  <h2 id="tajuk">Soalan 1</h2>
+  <div class="soalan" id="soalan">Anis makan ___</div>
+  <div class="pilihan" id="pilihan"></div>
+  <div class="nav">
+    <button onclick="sebelum()">⬅️ Sebelum</button>
+    <button onclick="seterusnya()">Seterusnya ➡️</button>
+    <button onclick="location.href='bm.html'">🏠 Menu</button>
   </div>
+</div>
 
-  <script>
-    const soalan = [
-      { awal: "Ibu sedang", jawapan: "memasak", pilihan: ["memasak", "menyapu", "bermain"] },
-      { awal: "Adik suka", jawapan: "membaca buku", pilihan: ["memasak", "membaca buku", "berjalan"] },
-      { awal: "Saya mahu", jawapan: "minum air", pilihan: ["lari laju", "tidur", "minum air"] },
-      { awal: "Kakak sedang", jawapan: "melukis", pilihan: ["melukis", "menjerit", "melompat"] },
-      { awal: "Datuk pergi ke", jawapan: "kebun", pilihan: ["kedai", "kebun", "rumah"] }
-    ];
+<script>
+const soalan = [
+  { soalan: "Anis makan ___", jawapan: "nasi", pilihan: ["nasi", "pasir", "pensel"] },
+  { soalan: "Ayah sedang ___", jawapan: "mencangkul", pilihan: ["mencangkul", "menjahit", "menari"] },
+  { soalan: "Saya suka ___ buku cerita", jawapan: "membaca", pilihan: ["menyiram", "membaca", "bermain"] },
+  { soalan: "Ali dan Abu bermain ___", jawapan: "bola", pilihan: ["bola", "kerusi", "pen" ]},
+  { soalan: "Adik memakai ___ di kaki", jawapan: "kasut", pilihan: ["topi", "kasut", "baju"] },
+  { soalan: "Kakak menyapu ___", jawapan: "lantai", pilihan: ["pokok", "lantai", "hujan"] },
+  { soalan: "Burung terbang di ___", jawapan: "langit", pilihan: ["rumput", "langit", "lantai"] },
+  { soalan: "Saya makan dengan ___", jawapan: "sudu", pilihan: ["sudu", "kerusi", "lampu"] },
+  { soalan: "Ibu membaca buku di ___", jawapan: "sofa", pilihan: ["sofa", "tingkap", "syiling"] },
+  { soalan: "Kita perlu minum ___", jawapan: "air", pilihan: ["air", "api", "pasir"] }
+];
 
-    let index = 0;
+let index = 0;
+let jawapanPengguna = new Array(soalan.length).fill(null);
 
-    function paparSoalan() {
-      const q = soalan[index];
-      document.getElementById("tajuk").innerText = "Soalan " + (index + 1);
-      document.getElementById("ayatAwal").innerText = q.awal;
-      document.getElementById("feedback").innerText = "";
-      const pilihanDiv = document.getElementById("pilihan");
-      pilihanDiv.innerHTML = "";
-      q.pilihan.forEach(j => {
-        const btn = document.createElement("button");
-        btn.className = "btn";
-        btn.innerText = j;
-        btn.onclick = () => semak(j);
-        pilihanDiv.appendChild(btn);
-      });
-    }
+function papar() {
+  const s = soalan[index];
+  document.getElementById("tajuk").innerText = "Soalan " + (index + 1);
+  document.getElementById("soalan").innerText = s.soalan;
+  const pilihan = document.getElementById("pilihan");
+  pilihan.innerHTML = "";
 
-    function semak(jawapan) {
-      const jBetul = soalan[index].jawapan;
-      const feedback = document.getElementById("feedback");
-      if (jawapan === jBetul) {
-        feedback.innerText = "Betul! Ayat lengkap: " + soalan[index].awal + " " + jBetul;
-      } else {
-        feedback.innerText = "Salah. Cuba lagi!";
-      }
-    }
+  s.pilihan.forEach(j => {
+    const btn = document.createElement("button");
+    btn.innerText = j;
+    btn.disabled = jawapanPengguna[index] !== null;
+    btn.onclick = () => {
+      jawapanPengguna[index] = j;
+      seterusnya();
+    };
+    pilihan.appendChild(btn);
+  });
+}
 
-    function seterusnya() {
-      if (index < soalan.length - 1) {
-        index++;
-        paparSoalan();
-      }
-    }
+function seterusnya() {
+  if (jawapanPengguna[index] === null) return;
+  if (index < soalan.length - 1) {
+    index++;
+    papar();
+  } else {
+    tamat();
+  }
+}
 
-    function sebelum() {
-      if (index > 0) {
-        index--;
-        paparSoalan();
-      }
-    }
+function sebelum() {
+  if (index > 0) {
+    index--;
+    papar();
+  }
+}
 
-    paparSoalan();
-  </script>
+function tamat() {
+  let betul = 0;
+  soalan.forEach((s, i) => {
+    if (jawapanPengguna[i] === s.jawapan) betul++;
+  });
+
+  document.getElementById("kad").innerHTML = `
+    <h2>Tamat!</h2>
+    <p>Anda dapat <strong>${betul}</strong> daripada ${soalan.length} soalan betul 🎉</p>
+    <button onclick="location.reload()">🔁 Cuba Lagi</button>
+    <button onclick="location.href='bm.html'">🏠 Menu</button>
+  `;
+}
+
+papar();
+</script>
 
 </body>
 </html>
