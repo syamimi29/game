@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu Utama</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(to bottom, #ffe6f0, #c6f7ff);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    h1 {
+      color: #ff77a9;
+      font-size: 32px;
+      text-align: center;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+
+    .menu {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .menu-btn {
+      background-color: #ffd6e0;
+      border: none;
+      border-radius: 15px;
+      padding: 15px 30px;
+      font-size: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .menu-btn:hover {
+      background-color: #ffaec8;
+      color: white;
+    }
+    @media (max-width: 500px) {
+  h1 {
+    font-size: 22px;
+    padding: 0 15px;
+  }
+
+  .menu-btn {
+    font-size: 16px;
+    padding: 12px 20px;
+    width: 100%;
+  }
+
+  .menu {
+    width: 90%;
+    align-items: center;
+  }
+}
+  </style>
+</head>
+<body>
+
+  <h1>Selamat Datang ke Game Suku Kata 🎮</h1>
+
+  <div class="menu">
+    <button class="menu-btn" onclick="location.href='buku.html'">📘 Game 1: Lengkapkan Ayat</button>
+    <button class="menu-btn" onclick="location.href='game-gambar.html'">🐾 Game 2: Padankan Gambar</button>
+    <button class="menu-btn" onclick="location.href='suku-kata.html'">🧠 Game 3: Susun Suku Kata</button>
+    <button class="menu-btn" onclick="location.href='padankan-ayat.html'">📖 Game 4: Padankan Ayat</button>
+    <button class="menu-btn" onclick="location.href='isi-tempat-kosong.html'">✏️ Game 5: Isi Tempat Kosong</button>
+  </div>
+
+  
+
+</body>
+</html>
