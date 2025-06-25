@@ -3,162 +3,140 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Tambah Gambar</title>
+  <title>Math Tambah Emoji</title>
   <style>
     body {
       font-family: 'Comic Sans MS', cursive;
-      background: linear-gradient(to bottom, #fffbe6, #d0faff);
+      background: linear-gradient(to bottom, #fdf6ff, #d0faff);
+      margin: 0;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
     }
-
     .kad {
-      background: rgba(255,255,255,0.95);
+      background: #ffffffee;
       padding: 30px;
       border-radius: 20px;
       text-align: center;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      max-width: 500px;
       width: 90%;
-      max-width: 600px;
     }
-
     h2 {
-      color: #ff9900;
+      color: #ff77a9;
     }
-
-    .gambar {
-      font-size: 40px;
-      margin-bottom: 20px;
+    .emoji {
+      font-size: 50px;
+      margin: 20px 0;
     }
-
-    .pilihan {
-      margin-top: 10px;
-    }
-
     .pilihan button {
-      background-color: #fff0c2;
+      background-color: #ffe0ec;
       border: none;
       padding: 10px 20px;
-      margin: 5px;
+      margin: 8px;
       font-size: 20px;
-      border-radius: 10px;
+      border-radius: 12px;
       cursor: pointer;
     }
-
     .pilihan button:hover {
-      background-color: #ffd36e;
+      background-color: #ffaec8;
       color: white;
     }
-
-    #feedback {
-      margin-top: 15px;
-      font-size: 18px;
-      color: #339966;
-    }
-
     .nav {
       margin-top: 20px;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
     }
-
     .nav button {
       background-color: #b2f2bb;
       border: none;
-      padding: 10px 18px;
+      padding: 10px 20px;
+      margin: 6px;
       border-radius: 10px;
       font-size: 16px;
       cursor: pointer;
-      margin-top: 10px;
     }
 
-    @media (max-width: 500px) {
-      .gambar {
-        font-size: 30px;
-      }
-
-      .pilihan button {
+    @media (max-width: 480px) {
+      .pilihan button, .nav button {
+        width: 100%;
+        margin: 6px 0;
         font-size: 18px;
-        width: 100%;
-      }
-
-      .nav button {
-        width: 100%;
-        margin-top: 10px;
       }
     }
   </style>
 </head>
 <body>
 
-<div class="kad">
+<div class="kad" id="kad">
   <h2 id="tajuk">Soalan 1</h2>
-  <div class="gambar" id="gambar">🐱 + 🐱🐱</div>
+  <div class="emoji" id="emoji">🍎 + 🍎🍎</div>
   <div class="pilihan" id="pilihan"></div>
-  <div id="feedback"></div>
-
   <div class="nav">
-    <button onclick="sebelum()">⬅️ Sebelum</button>
-    <button onclick="seterusnya()">Seterusnya ➡️</button>
-    <button onclick="location.href='math.html'">🏠 Menu</button>
+    <button onclick="location.reload()">🔁 Mula Semula</button>
+    <button onclick="location.href='math.html'">🏠 Menu Utama</button>
   </div>
 </div>
 
 <script>
-  const soalan = [
-    { gambar: "🐱 + 🐱🐱", jawapan: "3", pilihan: ["2", "3", "4"] },
-    { gambar: "🍎🍎 + 🍎", jawapan: "3", pilihan: ["3", "4", "2"] },
-    { gambar: "🐶 + 🐶", jawapan: "2", pilihan: ["1", "2", "3"] },
-    { gambar: "🦋🦋 + 🦋🦋", jawapan: "4", pilihan: ["3", "5", "4"] },
-    { gambar: "🐰 + 🐰🐰🐰", jawapan: "4", pilihan: ["2", "4", "3"] }
-  ];
+const soalan = [
+  { emoji: "🍎 + 🍎🍎", jawapan: "3", pilihan: ["2", "3", "4"] },
+  { emoji: "🐶🐶 + 🐶🐶", jawapan: "4", pilihan: ["3", "4", "5"] },
+  { emoji: "🐥 + 🐥🐥🐥", jawapan: "4", pilihan: ["2", "4", "5"] },
+  { emoji: "🍩🍩 + 🍩🍩🍩", jawapan: "5", pilihan: ["4", "5", "6"] },
+  { emoji: "🌟🌟 + 🌟🌟", jawapan: "4", pilihan: ["3", "4", "6"] },
+  { emoji: "🐱 + 🐱", jawapan: "2", pilihan: ["2", "3", "1"] },
+  { emoji: "🚗🚗🚗 + 🚗", jawapan: "4", pilihan: ["4", "5", "3"] },
+  { emoji: "🍌 + 🍌🍌", jawapan: "3", pilihan: ["3", "4", "5"] },
+  { emoji: "🎈🎈🎈 + 🎈🎈", jawapan: "5", pilihan: ["4", "5", "6"] },
+  { emoji: "🐸 + 🐸🐸🐸", jawapan: "4", pilihan: ["3", "4", "5"] }
+];
 
-  let index = 0;
+let index = 0;
+let jawapan = [];
 
-  function paparSoalan() {
-    const q = soalan[index];
-    document.getElementById("tajuk").innerText = "Soalan " + (index + 1);
-    document.getElementById("gambar").innerText = q.gambar;
-    document.getElementById("feedback").innerText = "";
-    const pilihanDiv = document.getElementById("pilihan");
-    pilihanDiv.innerHTML = "";
-    q.pilihan.forEach(jawapan => {
-      const btn = document.createElement("button");
-      btn.innerText = jawapan;
-      btn.onclick = () => semak(jawapan);
-      pilihanDiv.appendChild(btn);
-    });
+function papar() {
+  const s = soalan[index];
+  document.getElementById("tajuk").innerText = "Soalan " + (index + 1);
+  document.getElementById("emoji").innerText = s.emoji;
+  const pilihanDiv = document.getElementById("pilihan");
+  pilihanDiv.innerHTML = "";
+
+  s.pilihan.forEach(j => {
+    const btn = document.createElement("button");
+    btn.innerText = j;
+    btn.disabled = jawapan[index] !== undefined;
+    btn.onclick = () => {
+      jawapan[index] = j;
+      seterusnya();
+    };
+    pilihanDiv.appendChild(btn);
+  });
+}
+
+function seterusnya() {
+  if (index < soalan.length - 1) {
+    index++;
+    papar();
+  } else {
+    tamat();
   }
+}
 
-  function semak(jawapan) {
-    const betul = soalan[index].jawapan;
-    const feedback = document.getElementById("feedback");
-    if (jawapan === betul) {
-      feedback.innerText = "Betul! 🎉";
-    } else {
-      feedback.innerText = "Salah. Cuba lagi!";
-    }
-  }
+function tamat() {
+  let betul = 0;
+  soalan.forEach((s, i) => {
+    if (jawapan[i] === s.jawapan) betul++;
+  });
 
-  function seterusnya() {
-    if (index < soalan.length - 1) {
-      index++;
-      paparSoalan();
-    }
-  }
+  document.getElementById("kad").innerHTML = `
+    <h2>Tamat!</h2>
+    <p>Anda dapat <strong>${betul}</strong> daripada ${soalan.length} soalan 🎉</p>
+    <button onclick="location.reload()">🔁 Cuba Lagi</button>
+    <button onclick="location.href='math.html'">🏠 Kembali ke Menu</button>
+  `;
+}
 
-  function sebelum() {
-    if (index > 0) {
-      index--;
-      paparSoalan();
-    }
-  }
-
-  paparSoalan();
+papar();
 </script>
 
 </body>
