@@ -1,158 +1,153 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Pilih Tanda</title>
+  <title>Math Tanda</title>
   <style>
     body {
       font-family: 'Comic Sans MS', cursive;
-      background: linear-gradient(to bottom, #fffaf0, #ccf5ff);
+      background: linear-gradient(to bottom, #fdf6ff, #d0faff);
       margin: 0;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
     }
 
     .kad {
-      background: rgba(255,255,255,0.95);
+      background: #ffffffee;
       padding: 30px;
       border-radius: 20px;
       text-align: center;
-      width: 90%;
-      max-width: 500px;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      max-width: 500px;
+      width: 90%;
     }
 
     h2 {
-      color: #ff8800;
+      color: #ff77a9;
     }
 
     .soalan {
       font-size: 28px;
-      margin: 25px 0;
+      margin: 20px 0;
     }
 
-    .opsyen {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-    }
-
-    .opsyen button {
-      font-size: 22px;
-      padding: 12px 24px;
-      border: none;
-      border-radius: 10px;
+    .pilihan button {
       background-color: #ffe0ec;
+      border: none;
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 24px;
+      border-radius: 12px;
       cursor: pointer;
     }
 
-    .opsyen button:hover {
+    .pilihan button:hover {
       background-color: #ffaec8;
       color: white;
     }
 
-    #feedback {
-      font-size: 18px;
-      color: #339966;
-      margin-bottom: 15px;
-    }
-
     .nav {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
+      margin-top: 20px;
     }
 
     .nav button {
       background-color: #b2f2bb;
       border: none;
       padding: 10px 20px;
+      margin: 6px;
       border-radius: 10px;
       font-size: 16px;
       cursor: pointer;
     }
 
-    @media (max-width: 500px) {
+    @media (max-width: 480px) {
       .soalan {
-        font-size: 22px;
+        font-size: 24px;
       }
 
-      .opsyen button {
+      .pilihan button, .nav button {
         width: 100%;
-      }
-
-      .nav button {
-        width: 100%;
+        margin: 6px 0;
+        font-size: 20px;
       }
     }
   </style>
 </head>
 <body>
 
-<div class="kad">
+<div class="kad" id="kad">
   <h2 id="tajuk">Soalan 1</h2>
-  <div class="soalan" id="soalan">8 [___] 5 = 13</div>
-  <div class="opsyen">
-    <button onclick="semak('+')">+</button>
-    <button onclick="semak('-')">−</button>
-  </div>
-  <div id="feedback"></div>
+  <div class="soalan" id="soalan">8 ___ 5 = 13</div>
+  <div class="pilihan" id="pilihan"></div>
   <div class="nav">
-    <button onclick="sebelum()">⬅️</button>
-    <button onclick="seterusnya()">➡️</button>
-    <button onclick="location.href='math.html'">🏠 Menu</button>
+    <button onclick="location.reload()">🔁 Mula Semula</button>
+    <button onclick="location.href='math.html'">🏠 Menu Utama</button>
   </div>
 </div>
 
 <script>
-  const soalan = [
-    { nombor1: 8, nombor2: 5, jawapan: 13, tanda: "+" },
-    { nombor1: 9, nombor2: 4, jawapan: 5, tanda: "-" },
-    { nombor1: 7, nombor2: 3, jawapan: 10, tanda: "+" },
-    { nombor1: 15, nombor2: 6, jawapan: 9, tanda: "-" },
-    { nombor1: 6, nombor2: 6, jawapan: 12, tanda: "+" }
-  ];
+const soalan = [
+  { teks: "8 ___ 5 = 13", jawapan: "+", pilihan: ["+", "−"] },
+  { teks: "9 ___ 4 = 5", jawapan: "−", pilihan: ["+", "−"] },
+  { teks: "7 ___ 3 = 10", jawapan: "+", pilihan: ["+", "−"] },
+  { teks: "6 ___ 2 = 4", jawapan: "−", pilihan: ["+", "−"] },
+  { teks: "5 ___ 5 = 10", jawapan: "+", pilihan: ["+", "−"] },
+  { teks: "10 ___ 3 = 7", jawapan: "−", pilihan: ["+", "−"] },
+  { teks: "4 ___ 4 = 8", jawapan: "+", pilihan: ["+", "−"] },
+  { teks: "6 ___ 1 = 5", jawapan: "−", pilihan: ["+", "−"] },
+  { teks: "3 ___ 2 = 5", jawapan: "+", pilihan: ["+", "−"] },
+  { teks: "7 ___ 5 = 2", jawapan: "−", pilihan: ["+", "−"] }
+];
 
-  let index = 0;
+let index = 0;
+let jawapan = [];
 
-  function paparSoalan() {
-    const q = soalan[index];
-    document.getElementById("tajuk").innerText = "Soalan " + (index + 1);
-    document.getElementById("soalan").innerText = `${q.nombor1} [___] ${q.nombor2} = ${q.jawapan}`;
-    document.getElementById("feedback").innerText = "";
+function papar() {
+  const s = soalan[index];
+  document.getElementById("tajuk").innerText = "Soalan " + (index + 1);
+  document.getElementById("soalan").innerText = s.teks;
+  const pilihanDiv = document.getElementById("pilihan");
+  pilihanDiv.innerHTML = "";
+
+  s.pilihan.forEach(tanda => {
+    const btn = document.createElement("button");
+    btn.innerText = tanda;
+    btn.disabled = jawapan[index] !== undefined;
+    btn.onclick = () => {
+      jawapan[index] = tanda;
+      seterusnya();
+    };
+    pilihanDiv.appendChild(btn);
+  });
+}
+
+function seterusnya() {
+  if (index < soalan.length - 1) {
+    index++;
+    papar();
+  } else {
+    tamat();
   }
+}
 
-  function semak(tandaDipilih) {
-    const tandaBetul = soalan[index].tanda;
-    const feedback = document.getElementById("feedback");
-    if (tandaDipilih === tandaBetul) {
-      feedback.innerText = "Betul! 🎉";
-    } else {
-      feedback.innerText = "Salah. Cuba lagi!";
-    }
-  }
+function tamat() {
+  let betul = 0;
+  soalan.forEach((s, i) => {
+    if (jawapan[i] === s.jawapan) betul++;
+  });
 
-  function seterusnya() {
-    if (index < soalan.length - 1) {
-      index++;
-      paparSoalan();
-    }
-  }
+  document.getElementById("kad").innerHTML = `
+    <h2>Tamat!</h2>
+    <p>Anda dapat <strong>${betul}</strong> daripada ${soalan.length} soalan 🎉</p>
+    <button onclick="location.reload()">🔁 Cuba Lagi</button>
+    <button onclick="location.href='math.html'">🏠 Kembali ke Menu</button>
+  `;
+}
 
-  function sebelum() {
-    if (index > 0) {
-      index--;
-      paparSoalan();
-    }
-  }
-
-  paparSoalan();
+papar();
 </script>
 
 </body>
