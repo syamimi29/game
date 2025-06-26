@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Himpunan Doa Harian</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom, #fff0f6, #ffe1ec);
+      text-align: center;
+      padding: 30px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #444;
+    }
+
+    h1 {
+      font-size: 26px;
+      color: #ff77a9;
+      margin-bottom: 20px;
+    }
+
+    .doa-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .menu-btn {
+      background-color: #ffe0ec;
+      border: none;
+      padding: 14px;
+      font-size: 16px;
+      border-radius: 15px;
+      cursor: pointer;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+      transition: 0.2s;
+    }
+
+    .menu-btn:hover {
+      background-color: #ffaacc;
+      color: white;
+    }
+
+    .kembali-btn {
+      margin-top: 30px;
+      background-color: #b2f2bb;
+      border: none;
+      padding: 12px 26px;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .kembali-btn:hover {
+      background-color: #7fe89e;
+      color: white;
+    }
+
+    @media (max-width: 480px) {
+      .doa-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<h1>📿 Himpunan Doa Harian</h1>
+
+<div class="doa-container">
+  <button class="menu-btn" onclick="location.href='doa-bangun-tidur.html'">☀️ Bangun Tidur</button>
+  <button class="menu-btn" onclick="location.href='doa-masuk-tandas.html'">🚽 Masuk Tandas</button>
+  <button class="menu-btn" onclick="location.href='doa-keluar-tandas.html'">🚪 Keluar Tandas</button>
+  <button class="menu-btn" onclick="location.href='doa-sebelum-makan.html'">🍽️ Sebelum Makan</button>
+  <button class="menu-btn" onclick="location.href='doa-selepas-makan.html'">🍴 Selepas Makan</button>
+  <button class="menu-btn" onclick="location.href='doa-pakai-baju.html'">👕 Pakai Baju</button>
+  <button class="menu-btn" onclick="location.href='doa-keluar-rumah.html'">🚶 Keluar Rumah</button>
+  <button class="menu-btn" onclick="location.href='doa-naik-kenderaan.html'">🚌 Naik Kenderaan</button>
+  <button class="menu-btn" onclick="location.href='doa-masuk-kelas.html'">🏫 Masuk Kelas</button>
+  <button class="menu-btn" onclick="location.href='doa-ibu-bapa.html'">🤲 Doa Untuk Ibu Bapa</button>
+</div>
+
+<br>
+<button class="kembali-btn" onclick="location.href='menu-aktiviti.html'">🏠 Menu Utama</button>
+
+</body>
+</html>
