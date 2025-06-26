@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kuiz Bulan Islam</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(to bottom, #fff0f6, #e0ffff);
+      color: #444;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #ff77a9;
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
+
+    .bulan-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .bulan-item {
+      padding: 10px 14px;
+      background: #ffe9f3;
+      border-radius: 10px;
+      border: 2px solid #ffaacc;
+      cursor: grab;
+      font-weight: bold;
+    }
+
+    .drop-zone {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      max-width: 500px;
+      margin: auto;
+    }
+
+    .drop-slot {
+      background: #fffdfd;
+      border: 2px dashed #ccc;
+      border-radius: 10px;
+      height: 50px;
+      line-height: 50px;
+      font-size: 16px;
+      color: #aaa;
+    }
+
+    .drop-slot.filled {
+      border-style: solid;
+      color: #444;
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 12px 20px;
+      background-color: #b2f2bb;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #7fe89e;
+      color: white;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🧠 Susun 12 Bulan Islam Mengikut Tertib</h1>
+
+  <div class="bulan-container" id="bulanList">
+    <div class="bulan-item" draggable="true">Ramadan</div>
+    <div class="bulan-item" draggable="true">Rabiulawal</div>
+    <div class="bulan-item" draggable="true">Zulkaedah</div>
+    <div class="bulan-item" draggable="true">Safar</div>
+    <div class="bulan-item" draggable="true">Rejab</div>
+    <div class="bulan-item" draggable="true">Rabiulakhir</div>
+    <div class="bulan-item" draggable="true">Syawal</div>
+    <div class="bulan-item" draggable="true">Syaaban</div>
+    <div class="bulan-item" draggable="true">Muharram</div>
+    <div class="bulan-item" draggable="true">Jamadilawal</div>
+    <div class="bulan-item" draggable="true">Zulhijjah</div>
+    <div class="bulan-item" draggable="true">Jamadilakhir</div>
+  </div>
+
+  <div class="drop-zone" id="dropZone">
+    <!-- 12 slots -->
+    <div class="drop-slot" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <div class="drop-slot" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <div class="drop-slot" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <div class="drop-slot" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <div class="drop-slot" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <div class="drop-slot" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <div class="drop-slot" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <div class="drop-slot" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <div class="drop-slot" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <div class="drop-slot" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <div class="drop-slot" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <div class="drop-slot" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+  </div>
+
+  <button onclick="semakJawapan()">Semak Jawapan ✅</button>
+  <div class="result" id="result"></div>
+
+<script>
+  const jawapanBetul = ["Muharram","Safar","Rabiulawal","Rabiulakhir","Jamadilawal","Jamadilakhir",
+                        "Rejab","Syaaban","Ramadan","Syawal","Zulkaedah","Zulhijjah"];
+
+  const items = document.querySelectorAll('.bulan-item');
+  items.forEach(item => {
+    item.addEventListener('dragstart', drag);
+  });
+
+  function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.innerText);
+  }
+
+  function allowDrop(ev) {
+    ev.preventDefault();
+  }
+
+  function drop(ev) {
+    ev.preventDefault();
+    const data = ev.dataTransfer.getData("text");
+    if (ev.target.classList.contains("drop-slot") && ev.target.innerText === "") {
+      ev.target.innerText = data;
+      ev.target.classList.add("filled");
+      document.querySelector(`.bulan-item:contains("${data}")`)?.remove();
+    }
+  }
+
+  function semakJawapan() {
+    const slots = document.querySelectorAll('.drop-slot');
+    let skor = 0;
+    slots.forEach((slot, index) => {
+      if (slot.innerText === jawapanBetul[index]) skor++;
+    });
+
+    const result = document.getElementById("result");
+    if (skor === 12) {
+      result.innerHTML = "🎉 Tahniah! Semua betul. Kamu memang hebat! 🌟";
+    } else {
+      result.innerHTML = `😅 Kamu betul ${skor}/12. Cuba lagi ya!`;
+    }
+  }
+</script>
+
+<button class="btn" onclick="location.href='menu-aktiviti.html'">🏠 Menu Utama</button>
+
+</body>
+</html>

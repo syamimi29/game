@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kuiz Fakta Bulan Islam</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(to bottom, #fff9f9, #eafff6);
+      padding: 30px 20px;
+      color: #444;
+      text-align: center;
+    }
+
+    h1 {
+      color: #ff77a9;
+      font-size: 26px;
+      margin-bottom: 25px;
+    }
+
+    .kuiz-container {
+      max-width: 800px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .soalan {
+      background: #ffffffcc;
+      padding: 18px;
+      border-radius: 15px;
+      text-align: left;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .soalan h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+      color: #444;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 12px 24px;
+      border: none;
+      background-color: #b2f2bb;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #7fe89e;
+      color: white;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .btn-kembali {
+      background-color: #d0f0ff;
+      border: none;
+      padding: 12px 26px;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .btn-kembali:hover {
+      background-color: #a0defa;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🧠 Kuiz Fakta Bulan-Bulan Islam</h1>
+
+  <form id="kuiz" class="kuiz-container">
+    <!-- Soalan-soalan -->
+    <!-- Saya akan isikan 10 soalan di sini -->
+  </form>
+
+  <button onclick="semak()">Semak Jawapan ✅</button>
+  <div class="result" id="keputusan"></div>
+
+  <br>
+  <button class="btn-kembali" onclick="location.href='menu-aktiviti.html'">🏠 Kembali ke Menu Aktiviti</button>
+
+  <script>
+    const soalanData = [
+      { soalan: "1. Al-Quran diturunkan dalam bulan…", jawapan: "Ramadan", pilihan: ["Rejab", "Ramadan", "Zulhijjah"] },
+      { soalan: "2. Nabi Muhammad ﷺ dilahirkan pada bulan…", jawapan: "Rabiulawal", pilihan: ["Muharram", "Rabiulawal", "Syaaban"] },
+      { soalan: "3. Hari Raya Aidilfitri disambut pada bulan…", jawapan: "Syawal", pilihan: ["Ramadan", "Syawal", "Zulkaedah"] },
+      { soalan: "4. Hari Raya Korban berlaku dalam bulan…", jawapan: "Zulhijjah", pilihan: ["Rejab", "Zulhijjah", "Rabiulakhir"] },
+      { soalan: "5. Nabi paling banyak berpuasa sunat pada bulan…", jawapan: "Syaaban", pilihan: ["Rejab", "Syaaban", "Jamadilawal"] },
+      { soalan: "6. Peristiwa Isra’ & Mikraj berlaku dalam bulan…", jawapan: "Rejab", pilihan: ["Rabiulawal", "Rejab", "Zulhijjah"] },
+      { soalan: "7. Bulan pertama dalam kalendar Islam ialah…", jawapan: "Muharram", pilihan: ["Muharram", "Safar", "Rabiulakhir"] },
+      { soalan: "8. Bulan ke-12 dalam kalendar Islam ialah…", jawapan: "Zulhijjah", pilihan: ["Zulkaedah", "Zulhijjah", "Syawal"] },
+      { soalan: "9. Hari Arafah berlaku pada bulan…", jawapan: "Zulhijjah", pilihan: ["Zulhijjah", "Ramadan", "Jamadilakhir"] },
+      { soalan: "10. Puasa sunat enam hari biasa dilakukan dalam bulan…", jawapan: "Syawal", pilihan: ["Rejab", "Ramadan", "Syawal"] }
+    ];
+
+    const kuiz = document.getElementById("kuiz");
+
+    soalanData.forEach((data, index) => {
+      const div = document.createElement("div");
+      div.className = "soalan";
+
+      let html = `<h3>${data.soalan}</h3>`;
+      data.pilihan.forEach(jwp => {
+        html += `<label><input type="radio" name="soalan${index}" value="${jwp}"> ${jwp}</label>`;
+      });
+
+      div.innerHTML = html;
+      kuiz.appendChild(div);
+    });
+
+    function semak() {
+      let betul = 0;
+      soalanData.forEach((data, i) => {
+        const pilih = document.querySelector(`input[name="soalan${i}"]:checked`);
+        if (pilih && pilih.value === data.jawapan) betul++;
+      });
+
+      const keputusan = document.getElementById("keputusan");
+      if (betul === 10) {
+        keputusan.innerHTML = `🎉 MasyaAllah! Semua betul 10/10! Kamu memang hebat! 🌟`;
+      } else if (betul >= 7) {
+        keputusan.innerHTML = `👍 Syabas! Kamu dapat ${betul}/10. Teruskan usaha ya!`;
+      } else {
+        keputusan.innerHTML = `😅 Kamu dapat ${betul}/10. Tak apa, cuba lagi nanti!`;
+      }
+    }
+  </script>
+
+</body>
+</html>
