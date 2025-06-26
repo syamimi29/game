@@ -3,84 +3,70 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Menu Utama</title>
+  <title>Main Sambil Belajar</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Comic Sans MS', cursive;
-      background: linear-gradient(to bottom, #ffe6f0, #c6f7ff);
-      height: 100vh;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom, #fff5f9, #ffe4ec);
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
     }
 
     h1 {
       color: #ff77a9;
-      font-size: 32px;
-      text-align: center;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+      font-size: 34px;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px #ffe0ec;
     }
 
-    .menu {
-      margin-top: 30px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
+    p {
+      font-size: 20px;
+      color: #555;
+      margin-bottom: 40px;
     }
 
-    .menu-btn {
-  background-color: #ffe0ec;
-  border: none;
-  padding: 15px 30px;
-  margin: 10px;
-  font-size: 20px;
-  border-radius: 12px;
-  cursor: pointer;
-  box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
-  transition: 0.2s;
-}
+    .mula-btn {
+      background-color: #ffbcd3;
+      border: none;
+      padding: 16px 32px;
+      font-size: 20px;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
 
-.menu-btn:hover {
-  background-color: #ffaacc;
-  color: white;
-}
-    @media (max-width: 500px) {
-  h1 {
-    font-size: 22px;
-    padding: 0 15px;
-  }
+    .mula-btn:hover {
+      background-color: #ff88b0;
+      color: white;
+    }
 
-  .menu-btn {
-    font-size: 16px;
-    padding: 12px 20px;
-    width: 100%;
-  }
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 28px;
+      }
 
-  .menu {
-    width: 90%;
-    align-items: center;
-  }
-}
+      p {
+        font-size: 18px;
+      }
+
+      .mula-btn {
+        font-size: 18px;
+        width: 90%;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <h1>Selamat Datang ke Game Suku Kata 🎮</h1>
+  <h1>🎉 Selamat Datang ke<br>Main Sambil Belajar 🧠📚</h1>
+  <p>Isi nama kamu dan pilih aktiviti kegemaran 💖</p>
 
-  <div class="menu">
-    <h1>Pilih Subjek</h1>
-
-<div class="menu">
-  <button class="menu-btn" onclick="location.href='bm.html'">📘 Bahasa Melayu</button>
-  <button class="menu-btn" onclick="location.href='math.html'">📗 Matematik</button>
-  <button class="menu-btn" onclick="location.href='cerita.html'">📖 Cerita Nabi</button>
-</div>
-  </div>
-
-  
+  <button class="mula-btn" onclick="location.href='masuk-nama.html'">✨ Mula Sekarang</button>
 
 </body>
 </html>
