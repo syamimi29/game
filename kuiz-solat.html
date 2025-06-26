@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kuiz Waktu Solat</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(to bottom, #fffafc, #e0ffff);
+      padding: 30px 20px;
+      color: #444;
+      text-align: center;
+    }
+
+    h1 {
+      color: #6a75ff;
+      font-size: 26px;
+      margin-bottom: 25px;
+    }
+
+    .kuiz-container {
+      max-width: 900px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      text-align: left;
+    }
+
+    .soalan {
+      background: #ffffffdd;
+      padding: 18px;
+      border-radius: 15px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .soalan h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .semak-btn {
+      background-color: #ffe066;
+    }
+
+    .semak-btn:hover {
+      background-color: #ffd43b;
+    }
+
+    .btn-menu {
+      background-color: #d0f0ff;
+      margin-top: 15px;
+    }
+
+    .btn-menu:hover {
+      background-color: #a0defa;
+      color: white;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🧠 Kuiz Waktu Solat & Niat</h1>
+
+  <form id="kuiz" class="kuiz-container"></form>
+
+  <button class="semak-btn" onclick="semak()">Semak Jawapan ✅</button>
+  <div class="result" id="keputusan"></div>
+
+  <br>
+  <button class="btn-menu" onclick="location.href='menu-aktiviti.html'">🏠 Kembali ke Menu Aktiviti</button>
+
+  <script>
+    const data = [
+      {
+        soalan: "Berapakah rakaat solat Maghrib?",
+        jawapan: "3 rakaat",
+        pilihan: ["2 rakaat", "3 rakaat", "4 rakaat"]
+      },
+      {
+        soalan: "Bilakah waktu solat Asar?",
+        jawapan: "Petang",
+        pilihan: ["Selepas Subuh", "Tengah hari", "Petang"]
+      },
+      {
+        soalan: "Apa lafaz niat solat Subuh dalam BM?",
+        jawapan: "Sahaja aku solat fardhu Subuh dua rakaat kerana Allah Taala.",
+        pilihan: [
+          "Sahaja aku solat fardhu Zohor empat rakaat kerana Allah Taala.",
+          "Sahaja aku solat fardhu Subuh dua rakaat kerana Allah Taala.",
+          "Sahaja aku solat fardhu Asar empat rakaat kerana Allah Taala."
+        ]
+      },
+      {
+        soalan: "Apakah niat solat Zohor dalam tulisan Arab?",
+        jawapan: "نَوَيْتُ صَلَاةَ الظُّهْرِ",
+        pilihan: [
+          "نَوَيْتُ صَلَاةَ الفَجْرِ",
+          "نَوَيْتُ صَلَاةَ الظُّهْرِ",
+          "نَوَيْتُ صَلَاةَ العِشَاءِ"
+        ]
+      },
+      {
+        soalan: "Berapakah rakaat untuk solat Isyak?",
+        jawapan: "4 rakaat",
+        pilihan: ["4 rakaat", "2 rakaat", "3 rakaat"]
+      },
+      {
+        soalan: "Solat manakah yang dilakukan selepas matahari terbenam?",
+        jawapan: "Maghrib",
+        pilihan: ["Zohor", "Isyak", "Maghrib"]
+      }
+    ];
+
+    const kuiz = document.getElementById("kuiz");
+
+    data.forEach((item, index) => {
+      const soalanDiv = document.createElement("div");
+      soalanDiv.className = "soalan";
+      let html = `<h3>${item.soalan}</h3>`;
+      const pilihanRawak = [...item.pilihan].sort(() => Math.random() - 0.5);
+      pilihanRawak.forEach(opt => {
+        html += `<label><input type="radio" name="s${index}" value="${opt}"> ${opt}</label>`;
+      });
+      soalanDiv.innerHTML = html;
+      kuiz.appendChild(soalanDiv);
+    });
+
+    function semak() {
+      let betul = 0;
+      data.forEach((item, i) => {
+        const pilih = document.querySelector(`input[name="s${i}"]:checked`);
+        if (pilih && pilih.value === item.jawapan) betul++;
+      });
+
+      const keputusan = document.getElementById("keputusan");
+      if (betul === data.length) {
+        keputusan.innerHTML = `🌟 MasyaAllah! ${betul}/${data.length} — Hebat sungguh kamu!`;
+      } else if (betul >= 4) {
+        keputusan.innerHTML = `👍 Syabas! Kamu dapat ${betul}/${data.length}. Teruskan usaha ya!`;
+      } else {
+        keputusan.innerHTML = `😅 Kamu dapat ${betul}/${data.length}. Tak apa, cuba lagi nanti ya!`;
+      }
+    }
+  </script>
+
+</body>
+</html> 
