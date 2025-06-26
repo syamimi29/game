@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pilih Aktiviti</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom, #fff0f6, #ffe1ec);
+      text-align: center;
+      padding: 30px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #444;
+    }
+
+    h1 {
+      color: #ff77a9;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    #nama-murid {
+      font-size: 20px;
+      margin-bottom: 30px;
+    }
+
+    .butang-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .menu-btn {
+      background-color: #ffe0ec;
+      border: none;
+      padding: 16px;
+      font-size: 18px;
+      border-radius: 15px;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .menu-btn:hover {
+      background-color: #ffaacc;
+      color: white;
+    }
+
+    @media (max-width: 480px) {
+      .butang-container {
+        grid-template-columns: 1fr;
+      }
+
+      .menu-btn {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1 id="sapaan">🎉 Hai! Pilih Aktiviti</h1>
+ 
+
+  <div class="butang-container">
+    <button class="menu-btn" onclick="location.href='cerita.html'">📖 Cerita Nabi</button>
+    <button class="menu-btn" onclick="location.href='bm.html'">✏️ Bahasa Melayu</button>
+    <button class="menu-btn" onclick="location.href='math.html'">🧮 Matematik</button>
+    <button class="menu-btn" onclick="location.href='markah.html'">🏆 Lihat Markah</button>
+    <button class="menu-btn" onclick="location.href='senarai-doa.html'">📿 Himpunan Doa Harian</button>
+    
+  </div>
+
+  <script>
+   const nama = localStorage.getItem("namaPengguna") || "Tanpa Nama";
+document.getElementById("sapaan").innerHTML = `🎉 Hai ${nama}!<br>Pilih Aktiviti Kamu 💖`;
+  </script>
+
+</body>
+</html>

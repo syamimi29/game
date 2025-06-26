@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kedudukan Murid</title>
+  <style>
+    body {
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(to bottom, #fffafc, #ffe4ec);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  padding: 30px 20px;
+  margin: 0;
+}
+
+    h1 {
+      color: #ff77a9;
+      margin-bottom: 20px;
+    }
+
+    ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+  max-width: 400px;
+  width: 100%;
+}
+
+   li {
+  font-size: 20px;
+  background: #fff;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+    .highlight {
+      background-color: #fff5d6;
+      font-weight: bold;
+    }
+
+    .menu-btn {
+      margin-top: 30px;
+      background-color: #b2f2bb;
+      border: none;
+      padding: 12px 24px;
+      font-size: 18px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .menu-btn:hover {
+      background-color: #7fe89e;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🏆 Ranking Keseluruhan</h1>
+  <ul id="ranking"></ul>
+
+  <button class="menu-btn" onclick="location.href='menu-aktiviti.html'">🔙 Kembali ke Menu</button>
+
+  <script>
+    const skorBM = JSON.parse(localStorage.getItem("rekodSkorBM")) || [];
+    const skorMath = JSON.parse(localStorage.getItem("rekodSkorMath")) || [];
+    const namaSendiri = localStorage.getItem("namaPengguna");
+
+    const totalMarkah = {};
+
+    [...skorBM, ...skorMath].forEach(data => {
+      const { nama, markah } = data;
+      if (!totalMarkah[nama]) totalMarkah[nama] = 0;
+      totalMarkah[nama] += markah;
+    });
+
+    const susunan = Object.entries(totalMarkah)
+      .sort((a, b) => b[1] - a[1]);
+
+    const list = document.getElementById("ranking");
+
+    susunan.forEach(([nama, jumlah], idx) => {
+      const li = document.createElement("li");
+      const pingat = idx === 0 ? "🥇" : idx === 1 ? "🥈" : idx === 2 ? "🥉" : "🎓";
+
+      li.textContent = `${pingat} ${idx + 1}. ${nama} — ${jumlah} markah`;
+
+      if (nama === namaSendiri) li.classList.add("highlight");
+      list.appendChild(li);
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Kuiz</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom, #fffcee, #d0faff);
+      text-align: center;
+      padding: 30px;
+    }
+
+    h1 {
+      color: #ff7f50;
+    }
+
+    .soalan {
+      font-size: 22px;
+      margin: 30px 0;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 18px;
+      border-radius: 10px;
+      background-color: #ffccdd;
+      border: none;
+      margin: 10px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #f98dac;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Kuiz Mudah 🧠</h1>
+  <p class="soalan">5 + 3 = ?</p>
+
+  <button onclick="semak(6)">6</button>
+  <button onclick="semak(8)">8</button>
+  <button onclick="semak(10)">10</button>
+
+  <script>
+    let markah = 0;
+
+    function semak(jawapan) {
+      if (jawapan === 8) {
+        markah = 1;
+        alert("Betul! 🎉");
+      } else {
+        alert("Salah 😢");
+      }
+
+      const nama = localStorage.getItem("namaPengguna") || "Tanpa Nama";
+      let skor = JSON.parse(localStorage.getItem("rekodSkor")) || [];
+      skor.push({ nama: nama, markah: markah });
+      skor.sort((a, b) => b.markah - a.markah);
+      localStorage.setItem("rekodSkor", JSON.stringify(skor));
+
+      window.location.href = "markah.html";
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Markah Kamu</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom, #fffafc, #ffe4ec);
+      text-align: center;
+      padding: 50px 20px;
+    }
+
+    h1 {
+      font-size: 30px;
+      color: #ff77a9;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 22px;
+      color: #555;
+      margin-bottom: 40px;
+    }
+
+    button {
+      padding: 14px 28px;
+      font-size: 18px;
+      border: none;
+      border-radius: 12px;
+      background-color: #ffbcd3;
+      cursor: pointer;
+      transition: 0.3s;
+      margin: 10px;
+    }
+
+    button:hover {
+      background-color: #ff88b0;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎉 Markah Kamu</h1>
+  <p id="mesej-markah">Sedang muatkan markah...</p>
+
+  <button onclick="location.href='ranking.html'">🏆 Lihat Ranking</button>
+  <button onclick="location.href='menu-aktiviti.html'">🔙 Kembali ke Menu</button>
+
+  <script>
+    const nama = localStorage.getItem("namaPengguna") || "Tanpa Nama";
+    const markahTerkini = localStorage.getItem("markahTerkini") || "0";
+
+    document.getElementById("mesej-markah").textContent =
+      `Tahniah ${nama}! Kamu dapat ${markahTerkini} markah 💖`;
+  </script>
+
+</body>
+</html>
