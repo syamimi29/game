@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cerita Nabi Hud عليه السلام</title>
+  <style>
+    body { background: linear-gradient(to bottom, #fff8fc, #e1f7ff); font-family: 'Comic Sans MS', cursive; padding: 30px 20px; text-align: center; color: #444; }
+    h1 { color: #ff77a9; font-size: 26px; margin-bottom: 20px; }
+    .isi { max-width: 600px; margin: auto; background: #ffffffcc; padding: 20px; border-radius: 15px; text-align: left; line-height: 1.6; }
+    .isi p { font-size: 18px; margin-bottom: 14px; }
+    .butang { margin-top: 30px; }
+    .butang button { background-color: #b2f2bb; border: none; padding: 12px 24px; border-radius: 10px; font-size: 16px; margin: 5px; cursor: pointer; }
+    .butang button:hover { background-color: #7fe89e; color: white; }
+  </style>
+</head>
+<body>
+
+<h1>💨 Cerita Nabi Hud عليه السلام</h1>
+
+<div class="isi">
+  <p>Nabi Hud diutus kepada kaum ‘Ad, yang tinggal di padang pasir dan sangat kuat serta pandai membina bangunan tinggi 🏛️. Tapi mereka menjadi sombong dan lupa kepada Allah.</p>
+  <p>Nabi Hud menyeru mereka supaya menyembah Allah dan tidak menyombongkan diri. Tapi mereka mengejek dan enggan mendengar. Mereka berkata, “Kami paling kuat di muka bumi!”</p>
+  <p>Akibatnya, Allah menurunkan angin yang sangat kuat selama beberapa hari dan memusnahkan mereka. Hanya Nabi Hud dan orang beriman yang selamat 🌪️ Ini mengajar kita agar tidak sombong dan sentiasa ingat Allah.</p>
+</div>
+
+<div class="butang">
+  <button onclick="tandaBaca()">✅ Saya Dah Baca</button>
+  <button onclick="location.href='cerita.html'">⬅️ Kembali</button>
+</div>
+
+<script>
+  function tandaBaca() {
+    const nama = localStorage.getItem("namaPengguna") || "Tanpa Nama";
+    let bacaan = JSON.parse(localStorage.getItem("bacaCerita") || "{}");
+    bacaan[nama] = bacaan[nama] || [];
+    if (!bacaan[nama].includes("hud")) bacaan[nama].push("hud");
+    localStorage.setItem("bacaCerita", JSON.stringify(bacaan));
+    alert("Bagus! Terima kasih baca, " + nama + " 💨");
+  }
+</script>
+
+</body>
+</html>

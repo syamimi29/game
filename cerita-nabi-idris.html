@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cerita Nabi Idris عليه السلام</title>
+  <style>
+    body {
+      background: linear-gradient(to bottom, #fff8fc, #e1f7ff);
+      font-family: 'Comic Sans MS', cursive;
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    h1 { color: #ff77a9; margin-bottom: 20px; }
+    .isi {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #ffffffdd;
+      padding: 20px;
+      border-radius: 15px;
+      text-align: left;
+      line-height: 1.6;
+    }
+    .isi p { font-size: 18px; margin-bottom: 14px; }
+
+    .butang {
+      margin-top: 30px;
+    }
+
+    .butang button {
+      background-color: #b2f2bb;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-size: 16px;
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    .butang button:hover {
+      background-color: #7fe89e;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<h1>✍️ Cerita Nabi Idris عليه السلام</h1>
+
+<div class="isi">
+  <p>Nabi Idris ialah nabi keempat yang diangkat oleh Allah. Baginda sangat cintakan ilmu dan rajin belajar ✨ Baginda orang pertama yang tahu menulis dengan pena, menjahit pakaian, dan membaca bintang di langit.</p>
+  <p>Baginda amat taat kepada Allah dan sering mengajak umatnya melakukan kebaikan. Setiap hari, Nabi Idris bertambah ilmu dan ibadahnya. Baginda sangat bijak dan disayangi kerana sifat sabarnya.</p>
+  <p>Allah telah memuliakan Nabi Idris dengan mengangkatnya ke langit. Baginda dikurniakan kedudukan yang tinggi kerana keikhlasan dan ketekunan dalam menyebarkan ajaran Allah 🌟</p>
+</div>
+
+<div class="butang">
+  <button onclick="tandaBaca()">✅ Saya Dah Baca</button>
+  <button onclick="location.href='cerita.html'">⬅️ Kembali</button>
+</div>
+
+<script>
+  function tandaBaca() {
+    const nama = localStorage.getItem("namaPengguna") || "Tanpa Nama";
+    let bacaan = JSON.parse(localStorage.getItem("bacaCerita") || "{}");
+    bacaan[nama] = bacaan[nama] || [];
+    if (!bacaan[nama].includes("idris")) bacaan[nama].push("idris");
+    localStorage.setItem("bacaCerita", JSON.stringify(bacaan));
+    alert("Terima kasih baca, " + nama + " 💚");
+  }
+</script>
+
+</body>
+</html>

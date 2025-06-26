@@ -2,95 +2,85 @@
 <html lang="ms">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cerita Nabi Ibrahim</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cerita Nabi Ibrahim </title>
   <style>
     body {
-     font-family: 'Arial', sans-serif;
-
-      background: linear-gradient(to bottom, #fffaf5, #d6f9ff);
-      margin: 0;
-      padding: 30px;
-      color: #333;
-    }
-
-    .container {
-      max-width: 650px;
-      margin: auto;
-      background: #fffdfd;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      background: linear-gradient(to bottom, #fff8fc, #e1f7ff);
+      font-family: 'Comic Sans MS', cursive;
+      color: #444;
+      padding: 30px 20px;
+      text-align: center;
     }
 
     h1 {
-      text-align: center;
-      color: #ff7f50;
+      color: #ff77a9;
+      font-size: 26px;
       margin-bottom: 20px;
     }
 
-    p {
-      font-size: 22px;
+    .isi {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #ffffffcc;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: left;
       line-height: 1.6;
-      margin-bottom: 20px;
     }
 
-    .nav {
-      text-align: center;
+    .isi p {
+      margin-bottom: 14px;
+      font-size: 18px;
+    }
+
+    .butang {
       margin-top: 30px;
     }
 
-    .nav button {
+    .butang button {
       background-color: #b2f2bb;
       border: none;
       padding: 12px 24px;
-      font-size: 18px;
       border-radius: 10px;
+      font-size: 16px;
+      margin: 5px;
       cursor: pointer;
     }
 
-    .nav button:hover {
+    .butang button:hover {
       background-color: #7fe89e;
       color: white;
-    }
-
-    @media (max-width: 480px) {
-      p {
-        font-size: 20px;
-      }
-
-      .nav button {
-        width: 90%;
-        font-size: 16px;
-      }
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <h1>Cerita Nabi Ibrahim 🔥</h1>
+<h1>🔥 Cerita Nabi Ibrahim عليه السلام</h1>
 
-    <p>
-      Nabi Ibrahim ialah seorang nabi yang berani dan taat kepada Allah. Baginda tidak suka menyembah berhala. Nabi Ibrahim berkata kepada kaumnya bahawa berhala itu tidak hidup dan tidak boleh menolong sesiapa pun.
-    </p>
+<div class="isi">
+  <p>Nabi Ibrahim ialah seorang nabi yang berani dan taat kepada Allah. Baginda tidak suka menyembah berhala dan menasihati kaumnya bahawa berhala itu tidak hidup dan tidak boleh menolong sesiapa pun.</p>
+  <p>Kaum baginda menjadi marah kerana tidak mahu meninggalkan berhala mereka. Mereka menangkap Nabi Ibrahim dan menghukumnya dengan melemparkannya ke dalam api yang besar 🔥</p>
+  <p>Tetapi dengan kuasa Allah, api itu menjadi sejuk dan tidak membakar baginda. Nabi Ibrahim pun selamat dan terus menyeru manusia agar menyembah hanya kepada Allah sahaja 🌟</p>
+  <p>Baginda sangat tabah dan berani dalam menyampaikan kebenaran. Allah sangat sayang kepada orang yang beriman dan berani kerana Allah ❤️</p>
+</div>
 
-    <p>
-      Kaum baginda marah kerana tidak mahu meninggalkan berhala mereka. Mereka menangkap Nabi Ibrahim dan menghukumnya. Baginda dihumban ke dalam api yang besar.
-    </p>
+<div class="butang">
+  <button onclick="tandaBaca()">✅ Saya Dah Baca</button>
+  <button onclick="location.href='cerita.html'">⬅️ Kembali ke Senarai</button>
+</div>
 
-    <p>
-      Tetapi dengan kuasa Allah, api itu menjadi sejuk dan tidak membakar baginda. Nabi Ibrahim pun selamat.
-    </p>
-
-    <p>
-      Baginda terus menyeru manusia untuk menyembah Allah. Nabi Ibrahim sangat tabah dan berani menyampaikan kebenaran. Allah sayang orang yang beriman dan berani kerana Allah.
-    </p>
-
-    <div class="nav">
-      <button onclick="location.href='cerita.html'">🏠 Kembali ke Menu</button>
-    </div>
-  </div>
+<script>
+  function tandaBaca() {
+    const nama = localStorage.getItem("namaPengguna") || "Tanpa Nama";
+    let bacaan = JSON.parse(localStorage.getItem("bacaCerita") || "{}");
+    bacaan[nama] = bacaan[nama] || [];
+    if (!bacaan[nama].includes("ibrahim")) bacaan[nama].push("ibrahim");
+    localStorage.setItem("bacaCerita", JSON.stringify(bacaan));
+    alert("Alhamdulillah! Terima kasih baca, " + nama + " 🔥");
+  }
+</script>
 
 </body>
 </html>

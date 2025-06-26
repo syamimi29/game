@@ -1,68 +1,98 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>📖 Cerita Nabi</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cerita Nabi</title>
   <style>
     body {
-      font-family: 'Comic Sans MS', cursive;
-      background: linear-gradient(to bottom, #fff0f5, #cceeff);
       margin: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+      padding: 30px 20px;
+      background: linear-gradient(to bottom, #fff5f9, #e0f9ff);
+      font-family: 'Comic Sans MS', cursive;
+      color: #444;
+      text-align: center;
     }
 
     h1 {
+      font-size: 28px;
       color: #ff77a9;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
     }
 
-    .butang-container {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
+    .butang-cerita {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+      max-width: 600px;
+      margin: 0 auto;
     }
 
-    .butang {
-      background-color: #ffe0ec;
+    .butang-cerita button {
+      background-color: #ffe6ef;
       border: none;
-      padding: 15px 30px;
+      padding: 14px;
+      font-size: 16px;
       border-radius: 12px;
-      font-size: 20px;
       cursor: pointer;
-      box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-      transition: 0.2s;
+      transition: 0.3s;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
-    .butang:hover {
-      background-color: #ffaacc;
+    .butang-cerita button:hover {
+      background-color: #ffb8d1;
       color: white;
     }
 
-    @media (max-width: 480px) {
-      .butang {
-        font-size: 18px;
-        padding: 12px 24px;
-      }
+    .menu-btn {
+      margin-top: 40px;
+      background-color: #b2f2bb;
+      border: none;
+      padding: 12px 26px;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .menu-btn:hover {
+      background-color: #7fe89e;
+      color: white;
     }
   </style>
 </head>
 <body>
 
-  <h1>Pilih Cerita Nabi 📖</h1>
+  <h1>📖 Pilih Cerita Nabi</h1>
 
-  <div class="butang-container">
-    <button class="butang" onclick="location.href='cerita-nabi-nuh.html'">⛵ Nabi Nuh & Kapal</button>
-    <button class="butang" onclick="location.href='cerita-nabi-yunus.html'">🐋 Nabi Yunus & Ikan</button>
-    <button class="butang" onclick="location.href='cerita-nabi-ibrahim.html'">🔥 Nabi Ibrahim & Api</button>
-    <button class="butang" onclick="location.href='cerita-nabi-musa.html'">🌊 Nabi Musa & Laut</button>
-    <button class="butang" onclick="location.href='cerita-nabi-muhammad.html'">🌙 Nabi Muhammad SAW</button>
-    <button class="butang" onclick="location.href='index.html'">🏠 Menu Utama</button>
+  <div class="butang-cerita">
+    <button onclick="location.href='cerita-nabi-adam.html'">Nabi Adam 🌱</button>
+    <button onclick="location.href='cerita-nabi-idris.html'">Nabi Idris ✍️</button>
+    <button onclick="location.href='cerita-nabi-nuh.html'">Nabi Nuh 🚢</button>
+    <button onclick="location.href='cerita-nabi-hud.html'">Nabi Hud 💨</button>
+    <button onclick="location.href='cerita-nabi-saleh.html'">Nabi Saleh 🐪</button>
+    <button onclick="location.href='cerita-nabi-ibrahim.html'">Nabi Ibrahim 🔥</button>
+    <button onclick="location.href='cerita-nabi-lut.html'">Nabi Lut 🏘️</button>
+    <button onclick="location.href='cerita-nabi-ismail.html'">Nabi Ismail 🐏</button>
+    <button onclick="location.href='cerita-nabi-ishak.html'">Nabi Ishak 🐑</button>
+    <button onclick="location.href='cerita-nabi-yaakub.html'">Nabi Yaakub 🧔</button>
+    <button onclick="location.href='cerita-nabi-yusuf.html'">Nabi Yusuf 💎</button>
+    <button onclick="location.href='cerita-nabi-syuaib.html'">Nabi Syu’aib ⚖️</button>
+    <button onclick="location.href='cerita-nabi-ayyub.html'">Nabi Ayyub 🤒</button>
+    <button onclick="location.href='cerita-nabi-musa.html'">Nabi Musa 🌊</button>
+    <button onclick="location.href='cerita-nabi-harun.html'">Nabi Harun 🕊️</button>
+    <button onclick="location.href='cerita-nabi-zulkifli.html'">Nabi Zulkifli 🧘</button>
+    <button onclick="location.href='cerita-nabi-daud.html'">Nabi Daud 🎶</button>
+    <button onclick="location.href='cerita-nabi-sulaiman.html'">Nabi Sulaiman 👑</button>
+    <button onclick="location.href='cerita-nabi-ilyas.html'">Nabi Ilyas 🌿</button>
+    <button onclick="location.href='cerita-nabi-ilyasa.html'">Nabi Ilyasa’ 🌄</button>
+    <button onclick="location.href='cerita-nabi-yunus.html'">Nabi Yunus 🐳</button>
+    <button onclick="location.href='cerita-nabi-zakaria.html'">Nabi Zakaria 🌱</button>
+    <button onclick="location.href='cerita-nabi-yahya.html'">Nabi Yahya 👶</button>
+    <button onclick="location.href='cerita-nabi-isa.html'">Nabi Isa ✨</button>
+    <button onclick="location.href='cerita-nabi-muhammad.html'">Nabi Muhammad ﷺ 🌙</button>
   </div>
+
+  <button class="menu-btn" onclick="location.href='menu-aktiviti.html'">🏠 Menu Utama</button>
 
 </body>
 </html>

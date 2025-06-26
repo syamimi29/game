@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Doa Pakai Baju</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(to bottom, #fffafc, #e0ffff);
+      padding: 30px 20px;
+      color: #444;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 26px;
+      color: #ff77a9;
+      margin-bottom: 20px;
+    }
+
+    .isi {
+      max-width: 600px;
+      margin: auto;
+      background: #ffffffcc;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      line-height: 1.8;
+    }
+
+    .isi p {
+      font-size: 18px;
+      margin: 16px 0;
+    }
+
+    .arab {
+      font-size: 24px;
+      color: #222;
+      direction: rtl;
+    }
+
+    audio {
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    .butang {
+      margin-top: 30px;
+    }
+
+    .butang button {
+      background-color: #b2f2bb;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 5px;
+    }
+
+    .butang button:hover {
+      background-color: #7fe89e;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+
+
+
+<h1>🚪 Doa Keluar Tandas</h1>
+
+<div class="isi">
+  <p><strong>Arab:</strong></p>
+  <p class="arab">غُفْرَانَكَ</p>
+
+  <p><strong>Maksud:</strong><br>
+  Aku mohon keampunan-Mu, ya Allah.</p>
+
+  <p><strong>Bila nak baca:</strong><br>
+  Selepas keluar tandas 🚿</p>
+
+  <audio controls>
+    <source src="audio/doa-keluar-tandas.mp3" type="audio/mpeg">
+    Maaf, pelayar anda tidak menyokong audio.
+  </audio>
+</div>
+
+<div class="butang">
+  <button onclick="tandaHafal()">✅ Saya Dah Hafal</button>
+  <button onclick="location.href='senarai-doa.html'">⬅️ Kembali</button>
+</div>
+
+<script>
+  function tandaHafal() {
+    const nama = localStorage.getItem("namaPengguna") || "Tanpa Nama";
+    let hafal = JSON.parse(localStorage.getItem("doaHarian") || "{}");
+    hafal[nama] = hafal[nama] || [];
+    if (!hafal[nama].includes("pakai-baju")) hafal[nama].push("pakai-baju");
+    localStorage.setItem("doaHarian", JSON.stringify(hafal));
+    alert("Alhamdulillah, hebat hafal doa pakai baju, " + nama + " 👕");
+  }
+</script>
+
+</body>
+</html>

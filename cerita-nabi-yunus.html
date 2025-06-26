@@ -1,100 +1,84 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cerita Nabi Yunus</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cerita Nabi Yunus عليه السلام</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-
-      background: linear-gradient(to bottom, #fdf6ff, #ccf1ff);
-      margin: 0;
-      padding: 30px;
-      color: #333;
-    }
-
-    .container {
-      max-width: 650px;
-      margin: auto;
-      background: #fffdfd;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      background: linear-gradient(to bottom, #fff8fc, #e1f7ff);
+      font-family: 'Comic Sans MS', cursive;
+      color: #444;
+      padding: 30px 20px;
+      text-align: center;
     }
 
     h1 {
-      text-align: center;
-      color: #64b5f6;
+      color: #ff77a9;
+      font-size: 26px;
       margin-bottom: 20px;
     }
 
-    p {
-      font-size: 22px;
+    .isi {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #ffffffcc;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: left;
       line-height: 1.6;
-      margin-bottom: 20px;
     }
 
-    .nav {
-      text-align: center;
+    .isi p {
+      margin-bottom: 14px;
+      font-size: 18px;
+    }
+
+    .butang {
       margin-top: 30px;
     }
 
-    .nav button {
+    .butang button {
       background-color: #b2f2bb;
       border: none;
       padding: 12px 24px;
-      font-size: 18px;
       border-radius: 10px;
+      font-size: 16px;
       cursor: pointer;
+      margin: 5px;
     }
 
-    .nav button:hover {
+    .butang button:hover {
       background-color: #7fe89e;
       color: white;
-    }
-
-    @media (max-width: 480px) {
-      p {
-        font-size: 20px;
-      }
-
-      .nav button {
-        width: 90%;
-        font-size: 16px;
-      }
     }
   </style>
 </head>
 <body>
+<h1>🐳 Cerita Nabi Yunus عليه السلام</h1>
 
-  <div class="container">
-    <h1>Cerita Nabi Yunus 🐋</h1>
+<div class="isi">
+  <p>Nabi Yunus diutus kepada satu kaum yang ingkar. Kerana terlalu kecewa, baginda meninggalkan kaumnya sebelum dapat izin Allah. Baginda pun menaiki kapal dan berlaku ribut besar di lautan ⛵🌊</p>
+  <p>Baginda dicampak ke laut dan ditelan ikan besar dengan izin Allah 🐳 Baginda bertaubat dalam perut ikan dengan doa: “Tiada Tuhan melainkan Engkau, sesungguhnya aku telah menzalimi diriku.”</p>
+  <p>Allah menerima taubatnya dan keluarkan baginda dengan selamat. Kisah Nabi Yunus mengajar kita untuk bersabar, jangan berputus asa, dan sentiasa memohon ampun kepada Allah 🌙</p>
+</div>
 
-    <p>
-      Nabi Yunus diutuskan kepada satu kaum yang tidak mahu beriman kepada Allah. Baginda berasa sedih dan meninggalkan mereka tanpa izin Allah.
-    </p>
-
-    <p>
-      Nabi Yunus menaiki sebuah kapal. Tiba-tiba, laut bergelora dan kapal menjadi berat. Nabi Yunus dicampakkan ke dalam laut.
-    </p>
-
-    <p>
-      Seekor ikan besar menelan Nabi Yunus. Baginda tinggal dalam perut ikan selama beberapa hari. Di dalam perut ikan, Nabi Yunus berdoa dan memohon ampun kepada Allah.
-    </p>
-
-    <p>
-      Dengan izin Allah, ikan itu memuntahkan Nabi Yunus di darat dalam keadaan selamat. Nabi Yunus kemudian kembali kepada kaumnya.
-    </p>
-
-    <p>
-      Kaum itu akhirnya beriman kepada Allah. Allah Maha Penyayang dan Maha Pengampun.
-    </p>
-
-    <div class="nav">
-      <button onclick="location.href='cerita.html'">🏠 Kembali ke Menu</button>
-    </div>
+<div class="butang">
+    <button onclick="tandaBaca()">✅ Saya Dah Baca</button>
+    <button onclick="location.href='cerita.html'">⬅️ Kembali ke Senarai</button>
   </div>
+
+  <script>
+    function tandaBaca() {
+      const nama = localStorage.getItem("namaPengguna") || "Tanpa Nama";
+      let bacaan = JSON.parse(localStorage.getItem("bacaCerita") || "{}");
+      bacaan[nama] = bacaan[nama] || [];
+      if (!bacaan[nama].includes("adam")) bacaan[nama].push("adam");
+      localStorage.setItem("bacaCerita", JSON.stringify(bacaan));
+      alert("Alhamdulillah! Terima kasih baca, " + nama + " 🌸");
+    }
+  </script>
 
 </body>
 </html>

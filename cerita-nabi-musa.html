@@ -1,99 +1,87 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cerita Nabi Musa</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cerita Nabi Musa عليه السلام</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(to bottom, #e0f7ff, #fdf6ff);
-      margin: 0;
-      padding: 30px;
-      color: #333;
-    }
-
-    .container {
-      max-width: 650px;
-      margin: auto;
-      background: #fffdfd;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      background: linear-gradient(to bottom, #fff8fc, #e1f7ff);
+      font-family: 'Comic Sans MS', cursive;
+      color: #444;
+      padding: 30px 20px;
+      text-align: center;
     }
 
     h1 {
-      text-align: center;
-      color: #2196f3;
+      color: #ff77a9;
+      font-size: 26px;
       margin-bottom: 20px;
     }
 
-    p {
-      font-size: 22px;
+    .isi {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #ffffffcc;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: left;
       line-height: 1.6;
-      margin-bottom: 20px;
     }
 
-    .nav {
-      text-align: center;
+    .isi p {
+      margin-bottom: 14px;
+      font-size: 18px;
+    }
+
+    .butang {
       margin-top: 30px;
     }
 
-    .nav button {
+    .butang button {
       background-color: #b2f2bb;
       border: none;
       padding: 12px 24px;
-      font-size: 18px;
       border-radius: 10px;
+      font-size: 16px;
       cursor: pointer;
+      margin: 5px;
     }
 
-    .nav button:hover {
+    .butang button:hover {
       background-color: #7fe89e;
       color: white;
-    }
-
-    @media (max-width: 480px) {
-      p {
-        font-size: 20px;
-      }
-
-      .nav button {
-        width: 90%;
-        font-size: 16px;
-      }
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <h1>Cerita Nabi Musa 🌊</h1>
 
-    <p>
-      Nabi Musa ialah seorang nabi yang berani dan mulia. Baginda diutuskan kepada Firaun untuk menyeru agar menyembah Allah. Namun Firaun sangat sombong dan menolak ajakan Nabi Musa.
-    </p>
 
-    <p>
-      Nabi Musa membawa kaumnya keluar dari Mesir untuk selamatkan mereka daripada kezaliman Firaun. Namun Firaun dan tenteranya mengejar dari belakang.
-    </p>
+<h1>🌊 Cerita Nabi Musa عليه السلام</h1>
 
-    <p>
-      Apabila mereka sampai di tepi laut, kaum Nabi Musa ketakutan. Tetapi Nabi Musa percaya kepada Allah. Dengan izin Allah, baginda mengangkat tongkat dan laut pun terbelah dua!
-    </p>
+<div class="isi">
+  <p>Nabi Musa lahir ketika Firaun memerintah dan membunuh bayi lelaki. Ibunya diarahkan oleh Allah untuk letak baginda dalam kotak dan hanyutkan ke sungai. Dengan izin Allah, baginda dibesarkan oleh keluarga Firaun sendiri 🍼</p>
+  <p>Apabila dewasa, Nabi Musa menerima wahyu dan diperintah pergi kepada Firaun untuk menyeru kepada Allah. Firaun sombong dan angkuh. Maka Allah beri Nabi Musa mukjizat seperti tongkat yang menjadi ular dan membelah laut 🐍🌊</p>
+  <p>Baginda dan Bani Israel selamat menyeberangi Laut Merah, sementara Firaun dan tenteranya tenggelam. Kisah ini ajar kita tentang keberanian, keimanan, dan kepercayaan penuh kepada pertolongan Allah 💖</p>
+</div>
 
-    <p>
-      Kaum Nabi Musa pun menyeberang dengan selamat di atas jalan kering di tengah laut. Apabila Firaun cuba ikut, air laut kembali seperti biasa dan menenggelamkan mereka.
-    </p>
-
-    <p>
-      Allah menyelamatkan orang yang beriman dan bersabar. Kisah ini menunjukkan kuasa Allah yang sangat hebat dan kasih sayang-Nya kepada hamba yang taat.
-    </p>
-
-    <div class="nav">
-      <button onclick="location.href='cerita.html'">🏠 Kembali ke Menu</button>
-    </div>
+<div class="butang">
+    <button onclick="tandaBaca()">✅ Saya Dah Baca</button>
+    <button onclick="location.href='cerita.html'">⬅️ Kembali ke Senarai</button>
   </div>
+
+  <script>
+    function tandaBaca() {
+      const nama = localStorage.getItem("namaPengguna") || "Tanpa Nama";
+      let bacaan = JSON.parse(localStorage.getItem("bacaCerita") || "{}");
+      bacaan[nama] = bacaan[nama] || [];
+      if (!bacaan[nama].includes("adam")) bacaan[nama].push("adam");
+      localStorage.setItem("bacaCerita", JSON.stringify(bacaan));
+      alert("Alhamdulillah! Terima kasih baca, " + nama + " 🌸");
+    }
+  </script>
 
 </body>
 </html>
