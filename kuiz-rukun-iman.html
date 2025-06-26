@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kuiz Rukun Iman</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(to bottom, #fffafc, #e0ffff);
+      padding: 30px 20px;
+      color: #444;
+      text-align: center;
+    }
+
+    h1 {
+      color: #6a75ff;
+      font-size: 26px;
+      margin-bottom: 25px;
+    }
+
+    .kuiz-container {
+      max-width: 800px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .soalan {
+      background: #ffffffdd;
+      padding: 18px;
+      border-radius: 15px;
+      text-align: left;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .soalan h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+      color: #444;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 12px 24px;
+      border: none;
+      background-color: #b2f2bb;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #7fe89e;
+      color: white;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .btn-kembali {
+      background-color: #d0f0ff;
+      border: none;
+      padding: 12px 26px;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .btn-kembali:hover {
+      background-color: #a0defa;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🧠 Kuiz Rukun Iman</h1>
+
+  <form id="kuiz" class="kuiz-container">
+    <!-- Soalan akan dimasukkan melalui JavaScript -->
+  </form>
+
+  <button onclick="semak()">Semak Jawapan ✅</button>
+  <div class="result" id="keputusan"></div>
+
+  <br>
+  <button class="btn-kembali" onclick="location.href='menu-aktiviti.html'">🏠 Kembali ke Menu Aktiviti</button>
+
+  <script>
+    const soalanData = [
+      {
+        soalan: "1. Apakah Rukun Iman yang pertama?",
+        jawapan: "Beriman kepada Allah",
+        pilihan: [
+          "Beriman kepada Rasul",
+          "Beriman kepada Allah",
+          "Beriman kepada Kitab"
+        ]
+      },
+      {
+        soalan: "2. Malaikat dicipta oleh Allah untuk...",
+        jawapan: "Melaksanakan tugas tertentu",
+        pilihan: [
+          "Menjadi manusia",
+          "Menulis kitab",
+          "Melaksanakan tugas tertentu"
+        ]
+      },
+      {
+        soalan: "3. Kitab yang diturunkan oleh Allah ialah...",
+        jawapan: "Panduan hidup manusia",
+        pilihan: [
+          "Lagu nasihat",
+          "Panduan hidup manusia",
+          "Tulisan sejarah"
+        ]
+      },
+      {
+        soalan: "4. Siapakah para rasul?",
+        jawapan: "Utusan Allah kepada manusia",
+        pilihan: [
+          "Malaikat penjaga syurga",
+          "Utusan Allah kepada manusia",
+          "Ketua masyarakat"
+        ]
+      },
+      {
+        soalan: "5. Apakah itu Hari Kiamat?",
+        jawapan: "Hari pembalasan di akhirat",
+        pilihan: [
+          "Hari makan besar",
+          "Hari Nabi lahir",
+          "Hari pembalasan di akhirat"
+        ]
+      },
+      {
+        soalan: "6. Apa maksud beriman kepada Qada’ dan Qadar?",
+        jawapan: "Percaya semua takdir dari Allah",
+        pilihan: [
+          "Mencipta takdir sendiri",
+          "Percaya semua takdir dari Allah",
+          "Menyusun jadual hidup"
+        ]
+      }
+    ];
+
+    const kuiz = document.getElementById("kuiz");
+
+    soalanData.forEach((data, index) => {
+      const div = document.createElement("div");
+      div.className = "soalan";
+
+      let html = `<h3>${data.soalan}</h3>`;
+      data.pilihan.forEach(jwp => {
+        html += `<label><input type="radio" name="soalan${index}" value="${jwp}"> ${jwp}</label>`;
+      });
+
+      div.innerHTML = html;
+      kuiz.appendChild(div);
+    });
+
+    function semak() {
+      let betul = 0;
+      soalanData.forEach((data, i) => {
+        const pilih = document.querySelector(`input[name="soalan${i}"]:checked`);
+        if (pilih && pilih.value === data.jawapan) betul++;
+      });
+
+      const keputusan = document.getElementById("keputusan");
+      if (betul === 6) {
+        keputusan.innerHTML = `🌟 MasyaAllah! Semua betul 6/6! Kamu hebat sangat!`;
+      } else if (betul >= 4) {
+        keputusan.innerHTML = `👍 Syabas! Kamu dapat ${betul}/6. Teruskan usaha ya!`;
+      } else {
+        keputusan.innerHTML = `😅 Kamu dapat ${betul}/6. Tak apa, cuba lagi ya!`;
+      }
+    }
+  </script>
+
+</body>
+</html>

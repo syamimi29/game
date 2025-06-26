@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kuiz Drag & Drop Malaikat</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(to bottom, #fffafc, #e0ffff);
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #6a75ff;
+      font-size: 26px;
+      margin-bottom: 25px;
+    }
+
+    .tugas-container, .nama-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .tugas-box {
+      background: #ffffffdd;
+      border: 2px dashed #aad;
+      border-radius: 12px;
+      width: 280px;
+      min-height: 80px;
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .tugas-box.drag-over {
+      border-color: #6a75ff;
+      background-color: #e6f7ff;
+    }
+
+    .draggable {
+      background-color: #b2f2bb;
+      padding: 6px 14px;
+      border-radius: 10px;
+      display: inline-block;
+      cursor: grab;
+      font-weight: bold;
+    }
+
+    .draggable:hover {
+      background-color: #7fe89e;
+      color: white;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .semak-btn {
+      background-color: #ffe066;
+    }
+
+    .semak-btn:hover {
+      background-color: #ffd43b;
+    }
+
+    .btn-menu {
+      background-color: #d0f0ff;
+      margin-top: 15px;
+    }
+
+    .btn-menu:hover {
+      background-color: #a0defa;
+      color: white;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🧠 Padankan Nama Malaikat dengan Tugas 📦</h1>
+
+  <div class="nama-container" id="namaContainer">
+    <!-- Nama Malaikat (drag sources) dimasukkan oleh JS -->
+  </div>
+
+  <div class="tugas-container" id="tugasContainer">
+    <!-- Tugas Malaikat (drop target) dimasukkan oleh JS -->
+  </div>
+
+  <button class="semak-btn" onclick="semak()">Semak Jawapan ✅</button>
+  <div class="result" id="keputusan"></div>
+  <br>
+  <button class="btn-menu" onclick="location.href='menu-aktiviti.html'">🏠 Kembali ke Menu Aktiviti</button>
+
+  <script>
+    const malaikat = [
+      "Jibril", "Mikail", "Israfil", "Izrail",
+      "Munkar", "Nakir", "Raqib", "Atid", "Malik", "Ridwan"
+    ];
+
+    const tugasList = [
+      { tugas: "Menyampaikan wahyu kepada nabi 📖", jawapan: "Jibril" },
+      { tugas: "Mengatur rezeki seperti hujan dan tumbuhan 🌧️", jawapan: "Mikail" },
+      { tugas: "Meniup sangkakala pada Hari Kiamat 📯", jawapan: "Israfil" },
+      { tugas: "Mencabut nyawa makhluk ⚰️", jawapan: "Izrail" },
+      { tugas: "Menyoal manusia dalam kubur bersama Nakir ⚖️", jawapan: "Munkar" },
+      { tugas: "Menyoal manusia dalam kubur bersama Munkar ⚖️", jawapan: "Nakir" },
+      { tugas: "Mencatat amalan baik manusia ✅", jawapan: "Raqib" },
+      { tugas: "Mencatat amalan buruk manusia ❌", jawapan: "Atid" },
+      { tugas: "Menjaga pintu Neraka 🔥", jawapan: "Malik" },
+      { tugas: "Menjaga pintu Syurga 🌈", jawapan: "Ridwan" }
+    ];
+
+    const namaContainer = document.getElementById("namaContainer");
+    const tugasContainer = document.getElementById("tugasContainer");
+
+    malaikat.forEach(nama => {
+      const span = document.createElement("span");
+      span.textContent = nama;
+      span.className = "draggable";
+      span.draggable = true;
+      span.id = "nama-" + nama;
+
+      span.addEventListener("dragstart", e => {
+        e.dataTransfer.setData("text", e.target.id);
+      });
+
+      namaContainer.appendChild(span);
+    });
+
+    tugasList.forEach((item, i) => {
+      const div = document.createElement("div");
+      div.className = "tugas-box";
+      div.dataset.jawapan = item.jawapan;
+      div.ondragover = e => {
+        e.preventDefault();
+        div.classList.add("drag-over");
+      };
+      div.ondragleave = () => div.classList.remove("drag-over");
+      div.ondrop = e => {
+        e.preventDefault();
+        const data = e.dataTransfer.getData("text");
+        const dragged = document.getElementById(data);
+        if (dragged) {
+          div.innerHTML = item.tugas + "<br><strong>" + dragged.textContent + "</strong>";
+          div.classList.remove("drag-over");
+          div.dataset.jawapUser = dragged.textContent;
+        }
+      };
+      div.innerHTML = item.tugas;
+      tugasContainer.appendChild(div);
+    });
+
+    function semak() {
+      let betul = 0;
+      document.querySelectorAll(".tugas-box").forEach(box => {
+        if (box.dataset.jawapUser === box.dataset.jawapan) betul++;
+      });
+
+      const keputusan = document.getElementById("keputusan");
+      if (betul === 10) {
+        keputusan.innerHTML = `🌟 MasyaAllah! 10/10! Kamu memang bijak dan cermat!`;
+      } else if (betul >= 7) {
+        keputusan.innerHTML = `👍 Bagus! Kamu dapat ${betul}/10. Teruskan usaha!`;
+      } else {
+        keputusan.innerHTML = `😅 Kamu dapat ${betul}/10. Cuba lagi ya!`;
+      }
+    }
+  </script>
+
+</body>
+</html>
