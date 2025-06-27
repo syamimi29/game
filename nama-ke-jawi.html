@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <title>Nama ke Tulisan Jawi (Automatik)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      background: linear-gradient(to bottom, #fff0f5, #e0f7fa);
+      font-family: 'Comic Sans MS', cursive;
+      text-align: center;
+      padding: 30px;
+      color: #444;
+    }
+    h1 {
+      font-size: 28px;
+      color: #aa0077;
+    }
+    input {
+      padding: 12px;
+      width: 80%;
+      font-size: 18px;
+      border: 2px solid #ddaacc;
+      border-radius: 10px;
+      margin: 10px 0;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 6px;
+      border: none;
+      border-radius: 8px;
+      background-color: #ffb6c1;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #ff80ab;
+    }
+    .jawi-output {
+      margin-top: 30px;
+      font-size: 64px;
+      background: #fdf0ff;
+      border-radius: 20px;
+      padding: 25px;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🌸 Tukar Nama Rumi ke Tulisan Jawi 🌟</h1>
+
+<input type="text" id="inputName" placeholder="Contoh: Siti Aisyah">
+<br>
+<button onclick="convertToJawi()">Tukar ke Jawi</button>
+<button onclick="copyText()">Salin</button>
+<button onclick="printJawi()">Cetak Nama Saya</button>
+
+<div id="output" class="jawi-output">—</div>
+
+<script>
+  const map = {
+    'a': 'ا', 'b': 'ب', 'c': 'چ', 'd': 'د', 'e': 'ي', 'f': 'ف', 'g': 'ق',
+    'h': 'ه', 'i': 'ي', 'j': 'ج', 'k': 'ك', 'l': 'ل', 'm': 'م', 'n': 'ن',
+    'o': 'و', 'p': 'ڤ', 'q': 'ق', 'r': 'ر', 's': 'س', 't': 'ت', 'u': 'و',
+    'v': 'ۏ', 'w': 'و', 'x': 'س', 'y': 'ي', 'z': 'ز', ' ': ' ', '-': 'ـ',
+    'ng': 'ڠ', 'sy': 'ش', 'kh': 'خ'
+  };
+
+  function transliterate(text) {
+    text = text.toLowerCase();
+    let result = '';
+    let i = 0;
+    while (i < text.length) {
+      const pair = text.substr(i, 2);
+      if (map[pair]) {
+        result += map[pair];
+        i += 2;
+      } else {
+        const single = text.charAt(i);
+        result += map[single] || ' ';
+        i++;
+      }
+    }
+    return result;
+  }
+
+  function convertToJawi() {
+    const input = document.getElementById('inputName').value;
+    const jawi = transliterate(input);
+    document.getElementById('output').textContent = jawi || '—';
+  }
+
+  function copyText() {
+    const teks = document.getElementById('output').textContent;
+    navigator.clipboard.writeText(teks);
+    alert("✔ Tulisan Jawi disalin!");
+  }
+
+  function printJawi() {
+    const nama = document.getElementById('output').textContent;
+    const win = window.open('', '', 'width=400,height=300');
+    win.document.write(`
+      <html><head><title>Cetak Nama Jawi</title></head>
+      <body style="text-align:center;font-size:60px;font-family:'Traditional Arabic', serif; padding:50px;">
+      <p>🌺 Nama Anda dalam Jawi 🌟</p>
+      <div style="border: 2px dashed #aaa; padding: 20px; margin-top: 20px;">${nama}</div>
+      </body></html>
+    `);
+    win.document.close();
+    win.print();
+  }
+</script>
+
+</body>
+</html>
