@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kuiz Asmaul Husna</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background-color: #fff2f7;
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    h1 {
+      color: #d94f76;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .quiz-box {
+      background: #fff;
+      border: 2px dashed #ffc6db;
+      border-radius: 16px;
+      padding: 20px;
+      max-width: 350px;
+      margin: auto;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+
+    .question {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .options button {
+      padding: 10px;
+      background: #ffe8ef;
+      border: 1px solid #ffbad2;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .options button:hover {
+      background: #ffd0df;
+    }
+
+    .feedback {
+      margin-top: 18px;
+      font-weight: bold;
+    }
+
+    .next-btn {
+      margin-top: 20px;
+      padding: 10px 18px;
+      background-color: #ffb6c1;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .next-btn:hover {
+      background-color: #ff8fab;
+      color: white;
+    }
+    .kembali-btn {
+  display: inline-block;
+  padding: 10px 18px;
+  background-color: #ffe1ea;
+  border: 1px solid #ffc3d9;
+  color: #333;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.kembali-btn:hover {
+  background-color: #ffc7da;
+  color: #000;
+}
+  </style>
+</head>
+<body>
+  <h1>🧠 Kuiz Asmaul Husna</h1>
+  <div class="quiz-box">
+    <div class="question" id="soalan"></div>
+    <div class="options" id="pilihan"></div>
+    <div class="feedback" id="maklum"></div>
+    <button class="next-btn" onclick="nextSoalan()">Seterusnya ➡️</button>
+  </div>
+
+  <script>
+    const kuiz = [
+      {
+        soalan: "Apakah maksud Ar-Rahman?",
+        jawapanBetul: "Yang Maha Pengasih",
+        pilihan: [
+          "Yang Maha Penyayang",
+          "Yang Maha Pengasih",
+          "Yang Maha Mengetahui"
+        ]
+      },
+      {
+        soalan: "Yang manakah maksud Al-Quddus?",
+        jawapanBetul: "Yang Maha Suci",
+        pilihan: [
+          "Yang Maha Perkasa",
+          "Yang Maha Suci",
+          "Yang Maha Mulia"
+        ]
+      },
+      {
+        soalan: "Al-Ghafur bermaksud...",
+        jawapanBetul: "Yang Maha Pengampun",
+        pilihan: [
+          "Yang Maha Penyayang",
+          "Yang Maha Pengampun",
+          "Yang Maha Memberi Rezeki"
+        ]
+      },
+      {
+  soalan: "Apakah maksud Al-Malik?",
+  jawapanBetul: "Yang Maha Merajai",
+  pilihan: [
+    "Yang Maha Merajai",
+    "Yang Maha Mengetahui",
+    "Yang Maha Adil",
+    "Yang Maha Memberi Rezeki"
+  ]
+},
+{
+  soalan: "Yang manakah maksud As-Salam?",
+  jawapanBetul: "Yang Maha Sejahtera",
+  pilihan: [
+    "Yang Maha Sejahtera",
+    "Yang Maha Penyayang",
+    "Yang Maha Lembut",
+    "Yang Maha Esa"
+  ]
+},
+{
+  soalan: "Al-Ghaffar bermaksud...",
+  jawapanBetul: "Yang Maha Pengampun",
+  pilihan: [
+    "Yang Maha Pengampun",
+    "Yang Maha Agung",
+    "Yang Maha Melihat",
+    "Yang Maha Kuasa"
+  ]
+},
+{
+  soalan: "Apakah maksud Al-‘Adl?",
+  jawapanBetul: "Yang Maha Adil",
+  pilihan: [
+    "Yang Maha Adil",
+    "Yang Maha Melindungi",
+    "Yang Maha Pengasih",
+    "Yang Maha Suci"
+  ]
+},
+{
+  soalan: "Yang manakah maksud Al-Halim?",
+  jawapanBetul: "Yang Maha Penyantun",
+  pilihan: [
+    "Yang Maha Penyantun",
+    "Yang Maha Mendengar Segalanya",
+    "Yang Maha Memberi Petunjuk",
+    "Yang Maha Esa"
+  ]
+},
+{
+  soalan: "Al-Basir bermaksud...",
+  jawapanBetul: "Yang Maha Melihat",
+  pilihan: [
+    "Yang Maha Melihat",
+    "Yang Maha Mengetahui",
+    "Yang Maha Perkasa",
+    "Yang Maha Pemurah"
+  ]
+},
+{
+  soalan: "Apakah maksud Ar-Razzaq?",
+  jawapanBetul: "Yang Maha Pemberi Rezeki",
+  pilihan: [
+    "Yang Maha Pemberi Rezeki",
+    "Yang Maha Melapangkan",
+    "Yang Maha Menentukan",
+    "Yang Maha Memberi Kekayaan"
+  ]
+}
+    ];
+
+    let indeks = 0;
+    let markah = 0;
+
+    function paparSoalan() {
+      const q = kuiz[indeks];
+      document.getElementById("soalan").textContent = q.soalan;
+      const pilihan = document.getElementById("pilihan");
+      pilihan.innerHTML = "";
+      q.pilihan.sort(() => Math.random() - 0.5).forEach(jawapan => {
+        const butang = document.createElement("button");
+        butang.textContent = jawapan;
+        butang.onclick = () => semakJawapan(jawapan, q.jawapanBetul);
+        pilihan.appendChild(butang);
+      });
+      document.getElementById("maklum").textContent = "";
+    }
+
+    function semakJawapan(pilih, betul) {
+      const maklum = document.getElementById("maklum");
+      if (pilih === betul) {
+        maklum.textContent = "✅ Betul! Syabas!";
+        maklum.style.color = "green";
+        markah++;
+      } else {
+        maklum.textContent = "❌ Salah. Jawapan: " + betul;
+        maklum.style.color = "red";
+      }
+    }
+
+    function nextSoalan() {
+      if (indeks < kuiz.length - 1) {
+        indeks++;
+        paparSoalan();
+      } else {
+        document.querySelector(".quiz-box").innerHTML = `
+          <h2>🎉 Kuiz Tamat!</h2>
+          <p>Markah akhir cikgu: <strong>${markah} / ${kuiz.length}</strong></p>
+          <button class="next-btn" onclick="location.reload()">🔄 Jawab Semula</button>
+        `;
+      }
+    }
+
+    // Mula kuiz
+    paparSoalan();
+  </script>
+ <br>
+  <button class="next-btn" onclick="location.reload()">🔄 Jawab Semula</button><br/><br/>
+  <a href="asmaul-husna.html" class="kembali-btn">⬅️ Kembali ke Asmaul Husna</a>
+</br>
+</body>
+</html>
