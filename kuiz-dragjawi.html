@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <title>Susun Suku Kata Jawi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(to bottom, #fff0f5, #ffe5ec);
+      text-align: center;
+      padding: 30px;
+    }
+
+    h1 {
+      color: #ff69b4;
+      margin-bottom: 10px;
+    }
+
+    #soalan {
+      font-size: 20px;
+      color: #444;
+      margin-bottom: 20px;
+    }
+
+    .jawapan-area, .pilihan-area {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    .kotak-jawapan, .kotak-pilihan {
+      padding: 15px 25px;
+      font-size: 28px;
+      border-radius: 12px;
+      background-color: #ffcce0;
+      cursor: pointer;
+    }
+
+    .kotak-jawapan {
+      background-color: #fff;
+      border: 2px dashed #ff99cc;
+      min-width: 60px;
+      min-height: 50px;
+    }
+
+    #feedback {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    #nextBtn, #kembaliBtn {
+      padding: 12px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      background-color: #ffbcd3;
+      cursor: pointer;
+      margin: 5px;
+    }
+
+    #nextBtn:hover, #kembaliBtn:hover {
+      background-color: #ffaacc;
+      color: white;
+    }
+
+    @media (max-width: 500px) {
+      .kotak-jawapan, .kotak-pilihan {
+        font-size: 24px;
+        padding: 10px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🔤 Susun Suku Kata Jawi</h1>
+  <div id="soalan">Loading soalan...</div>
+
+  <div class="jawapan-area">
+    <div class="kotak-jawapan" ondrop="lepas(event)" ondragover="benar(event)" id="slot1"></div>
+    <div class="kotak-jawapan" ondrop="lepas(event)" ondragover="benar(event)" id="slot2"></div>
+  </div>
+
+  <div class="pilihan-area" id="pilihan-container"></div>
+
+  <div id="feedback"></div>
+
+  <button id="nextBtn" style="display:none" onclick="seterusnya()">➡️ Soalan Seterusnya</button>
+  <button id="kembaliBtn" style="display:none" onclick="window.location.href='jawi.html'">🔙 Kembali ke Dunia Jawi</button>
+
+  <script>
+    const soalanList = [
+      { bm: "bunga", jawapan: ["بو", "ڠا"], pilihan: ["بو", "ڠا", "با"] },
+      { bm: "meja", jawapan: ["مي", "جا"], pilihan: ["جا", "ما", "مي"] },
+      { bm: "gigi", jawapan: ["ڬي", "ڬي"], pilihan: ["قي", "ڬي", "گي"] }
+    ];
+
+    let index = 0;
+
+    function loadSoalan() {
+      const q = soalanList[index];
+      document.getElementById("soalan").innerHTML = `Susun perkataan <strong>${q.bm}</strong> dalam Jawi:`;
+      document.getElementById("slot1").innerHTML = "";
+      document.getElementById("slot2").innerHTML = "";
+      document.getElementById("feedback").innerText = "";
+      document.getElementById("nextBtn").style.display = "none";
+
+      // Reset pilihan
+      const pilihanHTML = shuffle([...q.pilihan])
+        .map(text => `<div class="kotak-pilihan" draggable="true" ondragstart="mulaSeret(event)" id="${text}">${text}</div>`)
+        .join("");
+      document.getElementById("pilihan-container").innerHTML = pilihanHTML;
+    }
+
+    function mulaSeret(e) {
+      e.dataTransfer.setData("text", e.target.id);
+    }
+
+    function benar(e) {
+      e.preventDefault();
+    }
+
+    function lepas(e) {
+      e.preventDefault();
+      const data = e.dataTransfer.getData("text");
+      if (e.target.innerHTML === "") {
+        e.target.innerHTML = document.getElementById(data).innerHTML;
+        semak();
+      }
+    }
+
+    function semak() {
+      const a = document.getElementById("slot1").innerText.trim();
+      const b = document.getElementById("slot2").innerText.trim();
+      if (a && b) {
+        const j = soalanList[index].jawapan;
+        if (a === j[0] && b === j[1]) {
+          document.getElementById("feedback").innerText = "✅ Tahniah! Jawapan betul.";
+          if (index < soalanList.length - 1) {
+            document.getElementById("nextBtn").style.display = "inline-block";
+          } else {
+            document.getElementById("kembaliBtn").style.display = "inline-block";
+            document.getElementById("feedback").innerText += " 🎉 Anda telah selesai semua soalan!";
+          }
+        } else {
+          document.getElementById("feedback").innerText = "❌ Susunan tidak betul. Cuba lagi.";
+        }
+      }
+    }
+
+    function seterusnya() {
+      index++;
+      if (index < soalanList.length) {
+        loadSoalan();
+      }
+    }
+
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    loadSoalan();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modul Jawi Interaktif</title>
+  <style>
+    body {
+      background: linear-gradient(to bottom, #fff1f8, #ffe5ed);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      min-height: 100vh;
+      margin: 0; padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #ff69b4;
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 18px;
+      color: #555;
+      margin-bottom: 30px;
+    }
+
+    .menu-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .menu-btn {
+      background-color: #ffcce0;
+      border: none;
+      padding: 15px;
+      font-size: 18px;
+      border-radius: 12px;
+      text-decoration: none;
+      color: #333;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+      transition: 0.3s;
+    }
+
+    .menu-btn:hover {
+      background-color: #ff99cc;
+      color: white;
+    }
+
+    .back-btn {
+      margin-top: 30px;
+      font-size: 16px;
+      color: #555;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>✍️ Selamat Datang ke Dunia Jawi</h1>
+  <p>Pilih aktiviti Jawi yang ingin dimainkan 🧠📖</p>
+
+  <div class="menu-container">
+    <a href="kuiz-jawi.html" class="menu-btn">🧠 Kuiz Ejaan Jawi</a>
+    <a href="kuiz-dragjawi.html" class="menu-btn">🔤 Susun Suku Kata Jawi</a>
+    <a href="kuiz-gambarjawi.html" class="menu-btn" >📖 Bacaan Jawi Bergambar</a>
+    <a href="padan-hurufjawi.html" class="menu-btn" >🖍️ Padankan Huruf Jawi</a>
+    
+  </div>
+
+  <div class="back-btn" onclick="location.href='index.html'">🔙 Kembali ke Menu Utama</div>
+
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kuiz Jawi Interaktif</title>
+  <style>
+    body {
+      background: linear-gradient(to bottom, #fff0f5, #ffe4ec);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      display: flex; flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      height: 100vh;
+      text-align: center;
+    }
+
+    h1 {
+      color: #ff66a3;
+      margin-bottom: 10px;
+    }
+
+    #question {
+      font-size: 24px;
+      margin: 20px 0;
+      color: #444;
+    }
+
+    .option {
+      background-color: #ffcde4;
+      border: none;
+      margin: 10px;
+      padding: 15px 25px;
+      font-size: 28px;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .option:hover {
+      background-color: #ffaacc;
+      color: white;
+    }
+
+    #feedback {
+      font-size: 20px;
+      margin-top: 15px;
+      color: #444;
+    }
+
+    #score {
+      margin-top: 20px;
+      color: #555;
+    }
+
+    #nextBtn {
+      margin-top: 20px;
+      padding: 12px 20px;
+      font-size: 18px;
+      background-color: #ffbcd3;
+      border: none;
+      border-radius: 10px;
+      display: none;
+      cursor: pointer;
+    }
+
+    @media (max-width: 500px) {
+      .option { font-size: 22px; width: 90%; }
+      #question { font-size: 20px; }
+    }
+    .btn-kembali {
+  margin-top: 30px;
+  padding: 12px 20px;
+  font-size: 16px;
+  background-color: #ffe0ee;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #333;
+  text-decoration: none;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+}
+
+.btn-kembali:hover {
+  background-color: #ffaacc;
+  color: white;
+}
+  </style>
+</head>
+<body>
+
+  <h1>Kuiz Jawi ✨</h1>
+  <div id="question">Soalan muncul di sini...</div>
+  <div id="options"></div>
+  <div id="feedback"></div>
+  <div id="score">Markah: 0</div>
+  <button id="nextBtn" onclick="nextQuestion()">➡️ Soalan Seterusnya</button>
+
+  <script>
+    const soalan = [
+      {
+        bm: "bunga",
+        pilihan: ["بوڠا", "بڠا", "بونغ"],
+        jawapan: "بوڠا"
+      },
+      {
+        bm: "meja",
+        pilihan: ["ميجا", "ميڬا", "ميغا"],
+        jawapan: "ميجا"
+      },
+      {
+        bm: "api",
+        pilihan: ["اڤي", "اڤى", "ايڤ"],
+        jawapan: "اڤي"
+      },
+      {
+        bm: "gigi",
+        pilihan: ["ڬيڬي", "قيقي", "قيق"],
+        jawapan: "ڬيڬي"
+      },
+      {
+        bm: "kerusi",
+        pilihan: ["كروسي", "كروشي", "كروسى"],
+        jawapan: "كروسي"
+      }
+    ];
+
+    let current = 0, markah = 0;
+
+    function paparSoalan() {
+      const q = soalan[current];
+      document.getElementById("question").innerHTML = `Bagaimana eja <strong>${q.bm}</strong> dalam Jawi?`;
+      const pilihanHTML = q.pilihan.map(jw =>
+        `<button class="option" onclick="semak('${jw}')">${jw}</button>`
+      ).join("");
+      document.getElementById("options").innerHTML = pilihanHTML;
+      document.getElementById("feedback").innerText = "";
+      document.getElementById("nextBtn").style.display = "none";
+    }
+
+    function semak(pilihan) {
+      const betul = soalan[current].jawapan;
+      if (pilihan === betul) {
+        markah++;
+        document.getElementById("feedback").innerText = "✅ Betul! Hebat!";
+      } else {
+        document.getElementById("feedback").innerText = `❌ Salah. Jawapan: ${betul}`;
+      }
+      document.getElementById("score").innerText = `Markah: ${markah}`;
+      document.querySelectorAll(".option").forEach(btn => btn.disabled = true);
+      document.getElementById("nextBtn").style.display = "block";
+    }
+
+    function nextQuestion() {
+      current++;
+      if (current < soalan.length) {
+        paparSoalan();
+      } else {
+        document.getElementById("question").innerHTML = "🎉 Kuiz Tamat!";
+        document.getElementById("options").innerHTML = "";
+        document.getElementById("feedback").innerText = `Jumlah markah: ${markah} / ${soalan.length}`;
+        document.getElementById("nextBtn").style.display = "none";
+      }
+    }
+
+    paparSoalan();
+  </script>
+  <br>
+  <button class="btn-kembali" onclick="location.href='jawi.html'">🏠 Kembali </button>
+</body>
+</html>

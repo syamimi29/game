@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <title>Kuiz Jawi Bergambar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(to bottom, #fff0f5, #ffe5ec);
+      text-align: center;
+      padding: 30px;
+    }
+
+    h1 {
+      color: #ff69b4;
+      margin-bottom: 15px;
+    }
+
+    .emoji {
+      font-size: 64px;
+      margin: 20px;
+    }
+
+    #question {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    .option {
+      background-color: #ffcce0;
+      border: none;
+      border-radius: 12px;
+      margin: 10px;
+      padding: 15px 25px;
+      font-size: 28px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .option:hover {
+      background-color: #ffaacc;
+      color: white;
+    }
+
+    #feedback {
+      font-size: 18px;
+      margin-top: 20px;
+      color: #333;
+    }
+
+    #nextBtn, #menuBtn {
+      margin-top: 25px;
+      padding: 12px 20px;
+      font-size: 16px;
+      background-color: #ffbcd3;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    #nextBtn:hover, #menuBtn:hover {
+      background-color: #ffaacc;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🖼️ Kuiz Jawi Bergambar</h1>
+  <div class="emoji" id="emoji">❓</div>
+  <div id="question">Ejaan Jawi untuk gambar ini?</div>
+  <div id="options"></div>
+  <div id="feedback"></div>
+  <button id="nextBtn" onclick="seterusnya()" style="display: none;">➡️ Soalan Seterusnya</button>
+  <button id="menuBtn" onclick="location.href='jawi.html'" style="display: none;">🏠 Kembali ke Dunia Jawi</button>
+
+  <script>
+    const soalan = [
+      {
+        emoji: "🐓",
+        jawapan: "ايام",
+        pilihan: ["ايام", "ايڤم", "اييم"]
+      },
+      {
+        emoji: "🦷",
+        jawapan: "ڬيڬي",
+        pilihan: ["قيقي", "ڬيڬي", "ڬڬي"]
+      },
+      {
+        emoji: "👞",
+        jawapan: "كاسوت",
+        pilihan: ["كاسوت", "قاسوت", "كسيت"]
+      },
+      {
+        emoji: "🐈",
+        jawapan: "كوچيڠ",
+        pilihan: ["كوسينج", "كوچيڠ", "كوجيڠ"]
+      },
+      {
+        emoji: "👀",
+        jawapan: "ماتا",
+        pilihan: ["ماته", "ماتا", "ماڽا"]
+      }
+    ];
+
+    let current = 0;
+    let markah = 0;
+
+    function paparSoalan() {
+      const q = soalan[current];
+      document.getElementById("emoji").innerText = q.emoji;
+      document.getElementById("question").innerText = "Ejaan Jawi untuk gambar ini?";
+      document.getElementById("feedback").innerText = "";
+      document.getElementById("nextBtn").style.display = "none";
+      document.getElementById("menuBtn").style.display = "none";
+
+      const pilihan = shuffle([...q.pilihan]).map(p =>
+        `<button class="option" onclick="semak('${p}')">${p}</button>`
+      ).join("");
+      document.getElementById("options").innerHTML = pilihan;
+    }
+
+    function semak(jw) {
+      const betul = soalan[current].jawapan;
+      if (jw === betul) {
+        markah++;
+        document.getElementById("feedback").innerText = "✅ Betul! Bagus!";
+      } else {
+        document.getElementById("feedback").innerText = `❌ Salah. Jawapan: ${betul}`;
+      }
+      document.querySelectorAll(".option").forEach(btn => btn.disabled = true);
+      if (current < soalan.length - 1) {
+        document.getElementById("nextBtn").style.display = "inline-block";
+      } else {
+        document.getElementById("feedback").innerText += ` 🎉 Tamat! Skor: ${markah}/${soalan.length}`;
+        document.getElementById("menuBtn").style.display = "inline-block";
+      }
+    }
+
+    function seterusnya() {
+      current++;
+      paparSoalan();
+    }
+
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    paparSoalan();
+  </script>
+
+</body>
+</html>
