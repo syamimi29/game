@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pop Belon Warna</title>
+  <style>
+    body {
+      margin: 0;
+      background: #fff0f6;
+      font-family: 'Comic Sans MS', cursive;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    h1 {
+      color: #d94f76;
+      margin: 16px;
+    }
+
+    #info {
+      font-size: 16px;
+      background: #ffeef3;
+      color: #d94f76;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid #ffc3d9;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    #game {
+      position: relative;
+      width: 100%;
+      height: 80vh;
+      overflow: hidden;
+      background: linear-gradient(#fffafc, #ffdcec);
+    }
+
+    .belon {
+      position: absolute;
+      bottom: -60px;
+      width: 40px;
+      height: 60px;
+      border-radius: 50% 50% 50% 50%;
+      text-align: center;
+      line-height: 40px;
+      font-size: 30px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    #menu {
+      margin-top: 20px;
+    }
+
+    #menu a {
+      text-decoration: none;
+      background: #ffc9dc;
+      color: #333;
+      padding: 10px 20px;
+      border-radius: 10px;
+      border: 2px solid #ff9fcb;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎈 Pop Belon Ikut Arahan!</h1>
+  <div id="info">Masa: 60s | Skor: 0<br>Arahan: Pop belon <strong id="warna-arahan">MERAH</strong></div>
+  <div id="game"></div>
+
+  <div id="menu">
+    <a href="gamegame.html">🔙 Kembali ke Menu</a>
+  </div>
+
+  <script>
+    const warnaList = ["MERAH", "BIRU", "HIJAU", "KUNING", "UNGU"];
+    const warnaKod = {
+      "MERAH": "#ff6b81",
+      "BIRU": "#5dade2",
+      "HIJAU": "#58d68d",
+      "KUNING": "#f4d03f",
+      "UNGU": "#bb8fce"
+    };
+
+    let skor = 0;
+    let masa = 60;
+    const info = document.getElementById("info");
+    const warnaTarget = document.getElementById("warna-arahan");
+    const game = document.getElementById("game");
+
+    let arahan = warnaList[Math.floor(Math.random() * warnaList.length)];
+    warnaTarget.textContent = arahan;
+    warnaTarget.style.color = warnaKod[arahan];
+
+    function hasilBelon() {
+      const b = document.createElement("div");
+      b.className = "belon";
+
+      const w = warnaList[Math.floor(Math.random() * warnaList.length)];
+      b.dataset.warna = w;
+      b.style.background = warnaKod[w];
+      b.style.left = Math.random() * (window.innerWidth - 50) + "px";
+
+      b.textContent = "🎈";
+      game.appendChild(b);
+
+      b.addEventListener("click", () => {
+        if (w === arahan) skor++;
+        else skor = Math.max(0, skor - 1);
+        info.innerHTML = `Masa: ${masa}s | Skor: ${skor}<br>Arahan: Pop belon <strong id="warna-arahan" style="color: ${warnaKod[arahan]}">${arahan}</strong>`;
+        b.remove();
+      });
+
+      let pos = -60;
+      const naik = setInterval(() => {
+        pos += 2;
+        b.style.bottom = pos + "px";
+        if (pos > window.innerHeight) {
+          b.remove();
+          clearInterval(naik);
+        }
+      }, 20);
+    }
+
+    const loopBelon = setInterval(hasilBelon, 800);
+
+    const countdown = setInterval(() => {
+      masa--;
+      info.innerHTML = `Masa: ${masa}s | Skor: ${skor}<br>Arahan: Pop belon <strong id="warna-arahan" style="color: ${warnaKod[arahan]}">${arahan}</strong>`;
+      if (masa <= 0) {
+        clearInterval(loopBelon);
+        clearInterval(countdown);
+        tamat();
+      }
+    }, 1000);
+
+    function tamat() {
+      const popup = document.createElement("div");
+      popup.innerHTML = `
+        <div style="
+          position: absolute;
+          top: 35%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: #fff0f6;
+          border: 2px solid #ffcce5;
+          padding: 30px;
+          border-radius: 16px;
+          text-align: center;
+          font-size: 18px;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+          z-index: 99;
+        ">
+          <h2>⏰ Masa Tamat!</h2>
+          <p>Jumlah Skor: <strong>${skor}</strong></p>
+          <button onclick="location.reload()" style="
+            margin-top: 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            background: #ffc9dc;
+            font-size: 16px;
+            cursor: pointer;
+          ">🔄 Main Semula</button>
+        </div>`;
+      game.appendChild(popup);
+    }
+  </script>
+   <div style="text-align: center; margin-top: 20px;">
+  <a href="gamegame.html" style="
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ffc9dc;
+    color: #333;
+    text-decoration: none;
+    border-radius: 10px;
+    border: 2px solid #ff9fcb;
+    font-size: 16px;
+  ">🔙 Kembali ke Menu</a>
+</div>
+</body>
+</html>

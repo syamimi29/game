@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lompat Halangan Mudah</title>
+  <style>
+    body {
+      margin: 0;
+      background: #e5f8f6;
+      font-family: 'Comic Sans MS', cursive;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    #game {
+      position: relative;
+      width: 100vw;
+      height: 80vh;
+      background: linear-gradient(to top, #d6fdfc, #fff);
+    }
+
+    #watak {
+      position: absolute;
+      bottom: 40px;
+      left: 50px;
+      font-size: 48px;
+      transition: bottom 0.2s;
+    }
+
+    .halangan {
+      position: absolute;
+      bottom: 40px;
+      right: -60px;
+      font-size: 36px;
+    }
+
+    #info {
+      margin-top: 10px;
+      font-size: 16px;
+      background: #c7f5f0;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid #a2e3dc;
+      color: #226c67;
+      display: inline-block;
+    }
+
+    .lompat-btn {
+      background: #ffcce5;
+      border: 2px solid #ff9fcb;
+      border-radius: 16px;
+      padding: 12px 24px;
+      font-size: 20px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    #menu {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+    }
+
+    #menu a {
+      text-decoration: none;
+      background: #ffdded;
+      color: #333;
+      padding: 8px 14px;
+      border: 2px solid #ffc3d9;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h2>🐰 Lompat Halangan Comel</h2>
+  <div id="info">Masa: 60s</div>
+  <div id="game">
+    <div id="watak">🐰</div>
+    <div id="menu"><a href="gamegame.html">🔙 Menu Game</a></div>
+  </div>
+  <button class="lompat-btn" onclick="lompatkan()">⬆️ Lompat</button>
+
+  <script>
+    const watak = document.getElementById("watak");
+    const game = document.getElementById("game");
+    const info = document.getElementById("info");
+    let lompat = false;
+    let masa = 60;
+
+    document.addEventListener("keydown", e => {
+      if (e.code === "Space") lompatkan();
+    });
+
+    function lompatkan() {
+      if (lompat) return;
+      lompat = true;
+      watak.style.bottom = "140px";
+      setTimeout(() => {
+        watak.style.bottom = "40px";
+        lompat = false;
+      }, 600);
+    }
+
+    function buatHalangan() {
+      const h = document.createElement("div");
+      h.className = "halangan";
+      h.textContent = "🚧";
+      h.style.right = "-60px";
+      h.style.fontSize = "30px";
+      game.appendChild(h);
+
+      let pos = -60;
+      const gerak = setInterval(() => {
+        pos += 2.5; // perlahankan
+        h.style.right = pos + "px";
+
+        const watakRect = watak.getBoundingClientRect();
+        const hRect = h.getBoundingClientRect();
+
+        // Kecilkan zon collision
+        if (
+          hRect.left < watakRect.right - 20 &&
+          hRect.right > watakRect.left + 20 &&
+          hRect.bottom > watakRect.top + 10
+        ) {
+          clearInterval(gerak);
+          tamat("💥 Oops! Terlanggar halangan!");
+        }
+
+        if (pos > window.innerWidth + 60) {
+          h.remove();
+          clearInterval(gerak);
+        }
+      }, 20);
+    }
+
+    const halanganInterval = setInterval(buatHalangan, 1800);
+
+    const timer = setInterval(() => {
+      masa--;
+      info.textContent = `Masa: ${masa}s`;
+      if (masa <= 0) {
+        clearInterval(timer);
+        clearInterval(halanganInterval);
+        tamat("⏰ Masa Tamat! Syabas!");
+      }
+    }, 1000);
+
+    function tamat(msg) {
+      const popup = document.createElement("div");
+      popup.innerHTML = `
+        <div style="
+          position: absolute;
+          top: 40%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: #fff0f6;
+          border: 2px solid #ffcce5;
+          padding: 30px;
+          border-radius: 16px;
+          text-align: center;
+          font-size: 18px;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+          z-index: 99;
+        ">
+          <h2>${msg}</h2>
+          <button onclick="location.reload()" style="
+            margin-top: 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            background: #ffc9dc;
+            font-size: 16px;
+            cursor: pointer;
+          ">🔄 Main Semula</button>
+        </div>`;
+      game.appendChild(popup);
+    }
+  </script>
+</body>
+</html>

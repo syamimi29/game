@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Matching Kad Comel</title>
+  <style>
+    body {
+      background: #fff0f6;
+      font-family: 'Comic Sans MS', cursive;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #d94f76;
+      margin-bottom: 10px;
+    }
+
+    #timer {
+      font-size: 18px;
+      background: #ffeef3;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid #ffc3d9;
+      color: #d94f76;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 70px);
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .kad {
+      width: 70px;
+      height: 70px;
+      font-size: 30px;
+      background: #ffcce1;
+      border: 2px solid #ff9fcb;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+    }
+
+    .kad.tutup {
+      background: #ffeef3;
+      font-size: 0;
+    }
+
+    .popup {
+      position: fixed;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff0f6;
+      border: 2px solid #ffc3d9;
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .popup button {
+      padding: 10px 20px;
+      background: #ffc9dc;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🃏 Matching Kad Comel</h1>
+  <div id="timer">Masa: 60s</div>
+  <div class="grid" id="grid"></div>
+
+  <script>
+    const icons = ['🐻','🍩','🌈','🍓'];
+    let kadList = [...icons, ...icons].sort(() => Math.random() - 0.5);
+    const grid = document.getElementById("grid");
+    const timerEl = document.getElementById("timer");
+    let flipped = [];
+    let padanan = 0;
+    let masa = 60;
+
+    // Papar kad
+    kadList.forEach((icon, i) => {
+      const kad = document.createElement("div");
+      kad.className = "kad tutup";
+      kad.dataset.icon = icon;
+      kad.dataset.index = i;
+      kad.addEventListener("click", () => bukaKad(kad));
+      grid.appendChild(kad);
+    });
+
+    function bukaKad(kad) {
+      if (!kad.classList.contains("tutup") || flipped.length === 2) return;
+
+      kad.textContent = kad.dataset.icon;
+      kad.classList.remove("tutup");
+      flipped.push(kad);
+
+      if (flipped.length === 2) {
+        const [a, b] = flipped;
+        if (a.dataset.icon === b.dataset.icon) {
+          flipped = [];
+          padanan++;
+          if (padanan === icons.length) tamat("Tahniah! Semua kad dipadankan 🎉");
+        } else {
+          setTimeout(() => {
+            a.textContent = "";
+            b.textContent = "";
+            a.classList.add("tutup");
+            b.classList.add("tutup");
+            flipped = [];
+          }, 800);
+        }
+      }
+    }
+
+    // Timer countdown
+    const countdown = setInterval(() => {
+      masa--;
+      timerEl.textContent = `Masa: ${masa}s`;
+      if (masa <= 0) {
+        clearInterval(countdown);
+        tamat("⏰ Masa Tamat!");
+      }
+    }, 1000);
+
+    function tamat(msg) {
+      const popup = document.createElement("div");
+      popup.className = "popup";
+      popup.innerHTML = `<h2>${msg}</h2>
+        <button onclick="location.reload()">🔄 Main Semula</button>`;
+      document.body.appendChild(popup);
+    }
+  </script>
+  <div style="text-align: center; margin-top: 20px;">
+  <a href="gamegame.html" style="
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ffc9dc;
+    color: #333;
+    text-decoration: none;
+    border-radius: 10px;
+    border: 2px solid #ff9fcb;
+    font-size: 16px;
+  ">🔙 Kembali ke Menu</a>
+</div>
+</body>
+</html>

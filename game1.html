@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <title>🍓 Tangkap Buah Jatuh</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      background: #fff3f6;
+      font-family: 'Comic Sans MS', cursive;
+      overflow: hidden;
+    }
+
+    #game {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    #bakul {
+      position: absolute;
+      bottom: 60px;
+      left: 50%;
+      width: 80px;
+      height: 40px;
+      background-color: #ffc6db;
+      border: 2px solid #ff8faf;
+      border-radius: 12px;
+      transform: translateX(-50%);
+      text-align: center;
+      line-height: 40px;
+      font-size: 24px;
+    }
+
+    .buah {
+      position: absolute;
+      top: 0;
+      width: 40px;
+      height: 40px;
+      font-size: 32px;
+      text-align: center;
+    }
+
+    #score {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 18px;
+      background: #ffeef3;
+      padding: 6px 10px;
+      border-radius: 10px;
+      border: 1px solid #ffc3d9;
+      color: #d94f76;
+      z-index: 10;
+    }
+
+    .controls {
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      z-index: 10;
+    }
+
+    .controls button {
+      margin: 0 10px;
+      font-size: 22px;
+      padding: 10px 20px;
+      border-radius: 12px;
+      background: #ffc9dc;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="game">
+    <div id="score">Skor: 0 | Masa: 60s</div>
+    <div id="bakul">🧺</div>
+    <div class="controls">
+      <button onclick="gerakKiri()">⬅️</button>
+      <button onclick="gerakKanan()">➡️</button>
+    </div>
+  </div>
+
+  <script>
+    const game = document.getElementById("game");
+    const bakul = document.getElementById("bakul");
+    const scoreDisplay = document.getElementById("score");
+    let skor = 0;
+    let masa = 60;
+
+    // Kawalan papan kekunci
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") gerakKiri();
+      if (e.key === "ArrowRight") gerakKanan();
+    });
+
+    // Fungsi sentuh kiri-kanan
+    function gerakKiri() {
+      const left = bakul.offsetLeft;
+      if (left > 0) {
+        bakul.style.left = left - 20 + "px";
+      }
+    }
+
+    function gerakKanan() {
+      const left = bakul.offsetLeft;
+      if (left < window.innerWidth - 80) {
+        bakul.style.left = left + 20 + "px";
+      }
+    }
+
+    // Buah jatuh
+    function dropBuah() {
+      const buah = document.createElement("div");
+      buah.classList.add("buah");
+      buah.textContent = "🍓";
+      buah.style.left = Math.random() * (window.innerWidth - 40) + "px";
+      game.appendChild(buah);
+
+      let pos = 0;
+      const jatuh = setInterval(() => {
+        pos += 4;
+        buah.style.top = pos + "px";
+
+        const buahRect = buah.getBoundingClientRect();
+        const bakulRect = bakul.getBoundingClientRect();
+
+        if (
+          buahRect.bottom >= bakulRect.top &&
+          buahRect.left < bakulRect.right &&
+          buahRect.right > bakulRect.left
+        ) {
+          skor++;
+          scoreDisplay.textContent = `Skor: ${skor} | Masa: ${masa}s`;
+          game.removeChild(buah);
+          clearInterval(jatuh);
+        }
+
+        if (pos > window.innerHeight) {
+          game.removeChild(buah);
+          clearInterval(jatuh);
+        }
+      }, 20);
+    }
+
+    const buahInterval = setInterval(dropBuah, 1300);
+
+    const timer = setInterval(() => {
+      masa--;
+      scoreDisplay.textContent = `Skor: ${skor} | Masa: ${masa}s`;
+      if (masa <= 0) {
+        clearInterval(timer);
+        clearInterval(buahInterval);
+        tamatGame();
+      }
+    }, 1000);
+
+    function tamatGame() {
+      const akhir = document.createElement("div");
+      akhir.innerHTML = `
+        <div style="
+          position: absolute;
+          top: 40%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: #fff0f6;
+          padding: 30px;
+          border: 2px solid #ffc6d9;
+          border-radius: 16px;
+          text-align: center;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+          z-index: 99;
+        ">
+          <h2>⏰ Masa Tamat!</h2>
+          <p>Jumlah Skor: <strong>${skor}</strong></p>
+          <button onclick="location.reload()" style="
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #ffc9dc;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+          ">🔄 Main Semula</button>
+        </div>
+      `;
+      game.appendChild(akhir);
+    }
+  </script>
+  <div style="text-align: center; margin-top: 20px;">
+  <a href="gamegame.html" style="
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ffc9dc;
+    color: #333;
+    text-decoration: none;
+    border-radius: 10px;
+    border: 2px solid #ff9fcb;
+    font-size: 16px;
+  ">🔙 Kembali ke Menu</a>
+</div>
+</body>
+</html>

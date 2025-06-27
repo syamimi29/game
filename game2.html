@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kereta Pink Betul</title>
+  <style>
+    body {
+      margin: 0;
+      background: #fff0f6;
+      font-family: 'Comic Sans MS', cursive;
+      overflow: hidden;
+    }
+
+    #game {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #kereta {
+      position: absolute;
+      bottom: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: auto;
+      z-index: 10;
+    }
+
+    .jalan-line, .objek, .controls, #info {
+      position: absolute;
+    }
+
+    .jalan-line {
+      width: 6px;
+      height: 40px;
+      background: white;
+      opacity: 0.5;
+    }
+
+    .objek {
+      font-size: 24px;
+      width: 30px;
+      height: 30px;
+      text-align: center;
+    }
+
+    #info {
+      top: 10px;
+      left: 10px;
+      background: #ffeef3;
+      padding: 8px 12px;
+      border-radius: 12px;
+      border: 1px solid #ffc3d9;
+      color: #d94f76;
+      font-size: 16px;
+      z-index: 10;
+    }
+
+    .controls {
+      bottom: 10px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      z-index: 99;
+    }
+
+    .controls button {
+      margin: 0 10px;
+      font-size: 22px;
+      padding: 12px 20px;
+      border-radius: 12px;
+      background: #ffc9dc;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="game">
+    <img src="kereta.jpg" id="kereta" alt="Kereta Pink Comel">
+    <div id="info">Skor: 0 | Masa: 60s</div>
+    <div class="controls">
+      <button onclick="gerakKiri()">⬅️</button>
+      <button onclick="gerakKanan()">➡️</button>
+    </div>
+  </div>
+
+  <script>
+    const kereta = document.getElementById("kereta");
+    const game = document.getElementById("game");
+    const info = document.getElementById("info");
+    let skor = 0;
+    let masa = 60;
+
+    document.addEventListener("keydown", e => {
+      if (e.key === "ArrowLeft") gerakKiri();
+      if (e.key === "ArrowRight") gerakKanan();
+    });
+
+    function gerakKiri() {
+      const left = kereta.offsetLeft;
+      if (left > 10) kereta.style.left = left - 20 + "px";
+    }
+
+    function gerakKanan() {
+      const left = kereta.offsetLeft;
+      if (left < window.innerWidth - 70) kereta.style.left = left + 20 + "px";
+    }
+
+    setInterval(() => {
+      const line = document.createElement("div");
+      line.className = "jalan-line";
+      line.style.left = (Math.random() * 80 + 10) + "%";
+      game.appendChild(line);
+
+      let pos = 0;
+      const anim = setInterval(() => {
+        pos += 5;
+        line.style.top = pos + "px";
+        if (pos > window.innerHeight) {
+          line.remove();
+          clearInterval(anim);
+        }
+      }, 20);
+    }, 300);
+
+    const objekList = ["🌟", "🚧"];
+    const objekFall = setInterval(() => {
+      const o = document.createElement("div");
+      o.className = "objek";
+      o.textContent = Math.random() < 0.7 ? "🌟" : "🚧";
+      o.style.left = Math.random() * (window.innerWidth - 30) + "px";
+      game.appendChild(o);
+
+      let pos = 0;
+      const jatuh = setInterval(() => {
+        pos += 4;
+        o.style.top = pos + "px";
+
+        const oRect = o.getBoundingClientRect();
+        const kRect = kereta.getBoundingClientRect();
+
+        if (
+          oRect.bottom >= kRect.top &&
+          oRect.left < kRect.right &&
+          oRect.right > kRect.left
+        ) {
+          if (o.textContent === "🌟") skor++;
+          else skor = Math.max(0, skor - 1);
+          info.textContent = `Skor: ${skor} | Masa: ${masa}s`;
+          o.remove();
+          clearInterval(jatuh);
+        }
+
+        if (pos > window.innerHeight) {
+          o.remove();
+          clearInterval(jatuh);
+        }
+      }, 20);
+    }, 1200);
+
+    const timer = setInterval(() => {
+      masa--;
+      info.textContent = `Skor: ${skor} | Masa: ${masa}s`;
+
+      if (masa <= 0) {
+        clearInterval(timer);
+        clearInterval(objekFall);
+        tamat();
+      }
+    }, 1000);
+
+    function tamat() {
+      const msg = document.createElement("div");
+      msg.innerHTML = `
+        <div style="
+          position: absolute;
+          top: 40%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: #fff0f6;
+          padding: 30px;
+          border: 2px solid #ffc3d9;
+          border-radius: 16px;
+          text-align: center;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+          z-index: 100;
+        ">
+          <h2>⏰ Masa Tamat!</h2>
+          <p>Jumlah Skor: <strong>${skor}</strong></p>
+          <button onclick="location.reload()" style="
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #ffc9dc;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+          ">🔄 Main Semula</button>
+        </div>
+      `;
+      game.appendChild(msg);
+    }
+  </script>
+  <div style="text-align: center; margin-top: 20px;">
+  <a href="gamegame.html" style="
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ffc9dc;
+    color: #333;
+    text-decoration: none;
+    border-radius: 10px;
+    border: 2px solid #ff9fcb;
+    font-size: 16px;
+  ">🔙 Kembali ke Menu</a>
+</div>
+</body>
+</html>
