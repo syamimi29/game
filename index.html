@@ -4,6 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Main Sambil Belajar</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffbcd3" />
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(reg => console.log("Service Worker berjaya:", reg.scope))
+          .catch(err => console.error("SW gagal daftar:", err));
+      });
+    }
+  </script>
   <style>
     body {
       font-family: 'Arial', sans-serif;
