@@ -4,17 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Main Sambil Belajar</title>
+
+  <!-- Link ke manifest (fail berasingan) -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#ffbcd3" />
+
+  <!-- Daftar service worker -->
   <script>
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('service-worker.js')
-          .then(reg => console.log("Service Worker berjaya:", reg.scope))
-          .catch(err => console.error("SW gagal daftar:", err));
-      });
+      navigator.serviceWorker.register('service-worker.js')
+        .then(reg => console.log("SW siap:", reg.scope))
+        .catch(err => console.error("SW gagal:", err));
     }
   </script>
+
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -57,14 +60,8 @@
     }
 
     @media (max-width: 480px) {
-      h1 {
-        font-size: 28px;
-      }
-
-      p {
-        font-size: 18px;
-      }
-
+      h1 { font-size: 28px; }
+      p { font-size: 18px; }
       .mula-btn {
         font-size: 18px;
         width: 90%;
